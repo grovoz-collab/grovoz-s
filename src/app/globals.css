@@ -1,26 +1,66 @@
 @import "tailwindcss";
 
+@theme {
+  /* No need to define built-in utilities like rounded-2xl here.
+     This block is for custom theme values, e.g.,
+     --colors-brand-blue: #2e4dfe;
+  */
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 16px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html, body {
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.gradient {
+  background: radial-gradient(1200px 600px at 80% -10%, #2e4dfe, transparent), radial-gradient(900px 500px at -10% 20%, #2e4dfe, transparent);
+}
+
+.card {
+  @apply rounded-2xl shadow-md border border-black/5 bg-white;
+}
+.dark .card {
+  @apply border-white/10 bg-blue-900;
+}
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: #2e4dfe;
+}
+/* In your globals.css or a dedicated CSS file */
+@keyframes slide-right {
+  from {
+    transform: translateX(-55%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-slide-right {
+  animation: slide-right 60s linear infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-gradient-animate {
+  background: linear-gradient(-45deg, #1e3a8a, #2563eb);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.rotate-on-scroll {
+  transition: transform 0.2s linear;
 }
