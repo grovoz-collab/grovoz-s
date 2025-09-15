@@ -6,10 +6,8 @@ import Featured from "./components/Featured";
 import CTA from "./components/CTA";
 import Footer from "./components/Footer";
 import HER  from "./components/HER";
-import Faq from "./components/Faq";
 import TestimonialsSection from "./components/Testimonialssection";
 import ResultsShowcase from "./components/ResultsShowcase"; // Adjust path if different
-import Servicessection from "./components/Servicessection";
 
 
 export default function Page() {
@@ -22,14 +20,12 @@ export default function Page() {
 
       <Logos />
           <Features />
-          <Servicessection />
       <CTA />
             <Featured />
             <TestimonialsSection />
           <Hero />
                       <ResultsShowcase />
 
-      <Faq />
       <Footer />
     </main>
   );
