@@ -71,7 +71,7 @@ const App = () => {
   const faqs = [
     {
       question: "What Will My Marketing Budget Be and How Do I Find It?",
-      answer: "Your marketing budget isn’t guesswork. It’s a reflection of your business size, goals, and the competitive landscape you’re up against. That’s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.\n\nIndustry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that’s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.\n\nThrough our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we’ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential. Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity."
+      answer: "Your marketing budget isn&#39;t guesswork. It’s a reflection of your business size, goals, and the competitive landscape you’re up against. That’s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.\n\nIndustry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that’s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.\n\nThrough our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we’ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential. Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity."
     },
     {
       question: "How long before I see results with digital marketing?",
@@ -109,7 +109,7 @@ const App = () => {
               Get in touch
             </h1>
             <p className="text-lg text-gray-700 mb-8">
-              We'd love to hear from you! Send us a message and we'll respond as soon as possible.
+              We&#39;d love to hear from you! Send us a message and we'll respond as soon as possible.
             </p>
             
 

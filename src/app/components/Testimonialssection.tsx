@@ -98,7 +98,7 @@ export default function TestimonialsSection() {
 
             {/* Add flex-grow to the paragraph */}
             <p className="text-slate-100 leading-relaxed mb-6 text-lg flex-grow">
-              "{testimonial.content}"
+              &quot;{testimonial.content}&quot;
             </p>
 
             <div className="flex items-center gap-4 mt-auto">
