@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import HER  from "./components/HER";
 import TestimonialsSection from "./components/Testimonialssection";
 import ResultsShowcase from "./components/ResultsShowcase"; // Adjust path if different
+import Servicesssection from "./components/Servicessection"
 
 
 export default function Page() {
@@ -19,6 +20,7 @@ export default function Page() {
             <HER />
 
       <Logos />
+      <Servicesssection />
           <Features />
       <CTA />
             <Featured />
