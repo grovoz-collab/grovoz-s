@@ -17,6 +17,12 @@ interface Post {
     }>;
   };
 }
+interface PostPageProps {
+  params: {
+    slug: string;
+  };
+}
+
 
 // 2. generateStaticParams function
 export async function generateStaticParams() {
@@ -38,8 +44,8 @@ async function getPost(slug: string): Promise<Post> {
   return posts[0];
 }
 
-// 4. PostPage component
-export default async function PostPage({ params }: { params: { slug: string } }) {
+// Update the component signature to use the correct type
+export default async function PostPage({ params }: PostPageProps) {
   const post = await getPost(params.slug);
   const imageUrl = post._embedded['wp:featuredmedia']?.[0].source_url;
   const imageAlt = post.title.rendered;
