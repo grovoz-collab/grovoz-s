@@ -43,9 +43,9 @@ export default function ResultsShowcase() {
                          hover:scale-105 hover:shadow-xl hover:bg-blue-50 hover:border-blue-500
                          group" // Added 'group' for child styling on hover
             >
-              <p className="text-purple-700 text-5xl font-extrabold mb-4
+              <p className="text-blue-700 text-5xl font-extrabold mb-4
                             transition-colors duration-300 ease-in-out
-                            group-hover:text-blue-700"> {/* Changed text color on hover */}
+                            group-hover:text-purple-700"> {/* Changed text color on hover */}
                 {result.figure}
               </p>
               <h3 className="text-xl font-semibold text-gray-900 mb-2

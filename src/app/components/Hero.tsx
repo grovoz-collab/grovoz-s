@@ -77,7 +77,7 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="absolute -inset-6 bg-gradient-to-tr from-brand-200/40 to-transparent blur-3xl rounded-3xl -z-10" />
+            <div className="absolute -inset-6 bg-gradient-to-tr from-blue-200/40 to-transparent blur-3xl rounded-3xl -z-10" />
             <div className="card p-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-xl bg-brand-50 border border-brand-100 p-6">
