@@ -45,7 +45,7 @@ async function getPost(slug: string): Promise<Post> {
 }
 
 // Update the component signature to use the correct type
-export default async function PostPage({ params }: PostPageProps) {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   const imageUrl = post._embedded['wp:featuredmedia']?.[0].source_url;
   const imageAlt = post.title.rendered;
