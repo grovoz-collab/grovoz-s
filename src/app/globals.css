@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-  /* No need to define built-in utilities like rounded-2xl here.
-     This block is for custom theme values, e.g.,
-     --colors-brand-blue: #2e4dfe;
-  */
-}
-
 :root {
   --radius: 16px;
 }
