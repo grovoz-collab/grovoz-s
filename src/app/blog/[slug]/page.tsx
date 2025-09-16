@@ -2,7 +2,6 @@
 import React from 'react';
 import Image from 'next/image';
 
-// 1. Define the Post interface here
 interface Post {
   slug: string;
   title: {
@@ -17,14 +16,7 @@ interface Post {
     }>;
   };
 }
-interface PostPageProps {
-  params: {
-    slug: string;
-  };
-}
 
-
-// 2. generateStaticParams function
 export async function generateStaticParams() {
   const res = await fetch('https://joseviews.com/wp-json/wp/v2/posts');
   const posts: Post[] = await res.json();
@@ -34,7 +26,6 @@ export async function generateStaticParams() {
   }));
 }
 
-// 3. getPost function (Type the slug parameter)
 async function getPost(slug: string): Promise<Post> {
   const res = await fetch(`https://joseviews.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
   if (!res.ok) {
@@ -44,7 +35,9 @@ async function getPost(slug: string): Promise<Post> {
   return posts[0];
 }
 
-// Update the component signature to use the correct type
+// Remove the unused interface here
+// interface PostPageProps { ... }
+
 export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   const imageUrl = post._embedded['wp:featuredmedia']?.[0].source_url;
