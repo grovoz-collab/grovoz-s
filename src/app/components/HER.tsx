@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-20"> {/* Adjusted padding */}
         <div className="text-center max-w-3xl mx-auto">
           <motion.h1 initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} className="text-3xl sm:text-5xl font-bold"> {/* Adjusted font size */}
-            Redefining Standards <span className="text-brand-600">In Digital Marketing</span> 
+            Redefining Standards <span className="text-blue-600">In Digital Marketing</span> 
             
           </motion.h1>
           <p className="mt-4 text-base sm:text-lg text-black-600 dark:text-black-300"> {/* Adjusted font size */}

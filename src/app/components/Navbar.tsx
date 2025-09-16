@@ -6,6 +6,24 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+// Define animation variants for the mobile menu
+const menuVariants = {
+  hidden: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      duration: 0.3
+    }
+  },
+  visible: {
+    height: 'auto',
+    opacity: 1,
+    transition: {
+      duration: 0.3
+    }
+  }
+};
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -40,7 +58,7 @@ export default function Navbar() {
         {/* Desktop buttons */}
         <div className="hidden md:flex items-center gap-3">
           <Link href="#contact" className="px-4 py-2 text-sm rounded-xl hover:bg-zinc-100">Contact</Link>
-          <Link href="#demo" className="px-4 py-2 text-sm rounded-xl bg-brand-600 text-white hover:bg-brand-700">Book a demo</Link>
+          <Link href="#demo" className="px-4 py-2 text-sm rounded-xl bg-blue-600 text-white hover:bg-brand-700">Book a demo</Link>
         </div>
 
         {/* Mobile toggle */}
@@ -53,16 +71,19 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
-      {open && (
-        <div className="md:hidden border-t border-black/5 px-4 py-3 space-y-2">
-          <a href="#products" className="block">Products</a>
-          <a href="#features" className="block">Features</a>
-          <a href="#developers" className="block">Developers</a>
-          <a href="#about" className="block">About</a>
-          <a href="#demo" className="block font-medium">Book a demo</a>
-        </div>
-      )}
+      {/* Mobile dropdown with animation */}
+      <motion.div
+        className="md:hidden border-t border-black/5 px-4 py-3 space-y-2 overflow-hidden"
+        variants={menuVariants}
+        initial="hidden"
+        animate={open ? "visible" : "hidden"}
+      >
+        <a href="#products" className="block">Products</a>
+        <a href="#features" className="block">Features</a>
+        <a href="#developers" className="block">Developers</a>
+        <a href="#about" className="block">About</a>
+        <a href="#demo" className="block font-medium">Book a demo</a>
+      </motion.div>
     </header>
   );
 }

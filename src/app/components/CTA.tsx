@@ -20,7 +20,7 @@ export default function CTA() {
             
             {/* The Button */}
           
-             <Link href="#contact" className="px-8 py-4 rounded-full bg-brand-500 text-white font-medium hover:bg-brand-500 transition-colors duration-300 transform hover:scale-105">
+             <Link href="#contact" className="px-8 py-4 rounded-full bg-blue-500 text-white font-medium hover:bg-grey-500 transition-colors duration-300 transform hover:scale-105">
                 Book Your Free 30-Minute Strategy Call <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300" />
               </Link>
           </div>

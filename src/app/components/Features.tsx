@@ -83,7 +83,7 @@ export default function Features() {
               className="card p-6"
               variants={itemVariants}
             >
-              <Icon className="h-5 w-5 mb-3 text-brand-600" />
+              <Icon className="h-5 w-5 mb-3 text-blue-600" />
               <h3 className="font-semibold">{title}</h3>
               <p className="text-sm text-zinc-600 mt-1">{desc}</p>
             </motion.div>
