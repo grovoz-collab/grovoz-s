@@ -1,15 +1,15 @@
 // src/app/blog/[slug]/page.tsx
 import React from 'react';
 
-// This function tells Next.js which pages to build at a time
-export async function generateStaticParams() {
+export default async function generateStaticParams() {
   const res = await fetch('https://joseviews.com/wp-json/wp/v2/posts');
-  const posts = await res.json();
+  // Explicitly cast the result to the Post array type
+  const posts: Post[] = await res.json();
+  
   return posts.map((post) => ({
     slug: post.slug,
   }));
 }
-
 // src/app/blog/[slug]/page.tsx
 async function getPost(slug) {
   const res = await fetch(`https://joseviews.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
