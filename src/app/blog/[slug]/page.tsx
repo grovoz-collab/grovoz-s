@@ -1,10 +1,24 @@
 // src/app/blog/[slug]/page.tsx
-// All necessary imports should be at the top of the file
 import React from 'react';
 import Image from 'next/image';
 
-// ... (Your interface definition for Post should be here) ...
+// 1. Define the Post interface here
+interface Post {
+  slug: string;
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  _embedded: {
+    'wp:featuredmedia'?: Array<{
+      source_url: string;
+    }>;
+  };
+}
 
+// 2. generateStaticParams function
 export async function generateStaticParams() {
   const res = await fetch('https://joseviews.com/wp-json/wp/v2/posts');
   const posts: Post[] = await res.json();
@@ -14,9 +28,18 @@ export async function generateStaticParams() {
   }));
 }
 
-// ... (Your getPost function should be here) ...
+// 3. getPost function (Type the slug parameter)
+async function getPost(slug: string): Promise<Post> {
+  const res = await fetch(`https://joseviews.com/wp-json/wp/v2/posts?slug=${slug}&_embed`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch post data.');
+  }
+  const posts: Post[] = await res.json();
+  return posts[0];
+}
 
-export default async function PostPage({ params }) {
+// 4. PostPage component
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   const imageUrl = post._embedded['wp:featuredmedia']?.[0].source_url;
   const imageAlt = post.title.rendered;
@@ -27,7 +50,6 @@ export default async function PostPage({ params }) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      {/* The Image component is used here, so the import is necessary */}
       {imageUrl && (
         <Image
           src={imageUrl}
