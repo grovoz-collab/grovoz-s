@@ -6,8 +6,8 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const data = [
-  { name: 'Jan', uv: 4000 },
-  { name: 'Feb', uv: 3000 },
+  { name: 'Jan', uv: 1200 },
+  { name: 'Feb', uv: 2400 },
   { name: 'Mar', uv: 2000 },
   { name: 'Apr', uv: 2780 },
   { name: 'May', uv: 1890 },
@@ -16,8 +16,8 @@ const data = [
   { name: 'Aug', uv: 2100 },
   { name: 'Sep', uv: 4500 },
   { name: 'Oct', uv: 3200 },
-  { name: 'Nov', uv: 5000 },
-  { name: 'Dec', uv: 4200 },
+  { name: 'Nov', uv: 4200 },
+  { name: 'Dec', uv: 5900 },
 ];
 
 const LineGraph = () => {

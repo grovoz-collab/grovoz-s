@@ -6,39 +6,9 @@ export default function Home() {
   const cardData = [
     {
       id: 1,
-      title: 'Discovery Call: Understanding Your Goals',
-      description: 'Everything begins with a one-on-one consultation—no forms, no guesswork. During this call, our team listens closely to grasp your business objectives, target audience, budget realities, and growth expectations. This isn&apos;t a sales pitch; it&apos;s where our strategy is anchored. Have a new product? Struggling with brand visibility? Need more qualified leads? This is where we align with your ambitions.',
-      top: 'top-0'
-    },
-    {
-      id: 2,
-      title: 'Digital Marketing Audit: Evaluating Your Current Landscape',
-      description: 'We conduct a comprehensive audit of your digital footprint. This includes deep analysis of your website infrastructure, SEO strength, current paid campaigns, content quality, and social media engagement. Tools like SEMrush, Google Analytics, and Ahrefs produce real-time data—no assumptions. We identify missed opportunities, technical bottlenecks, and underperforming assets.',
-      top: 'top-16'
-    },
-    {
-      id: 3,
-      title: 'Strategy Planning: Crafting a Custom Game Plan',
-      description: 'With audit data in hand, we build a roadmap structured around your KPIs. Every deliverable is backed by measurable objectives and staged timelines. You approve the direction before anything goes live.',
-      top: 'top-32',
-      points: [
-        'SEO strategy: for visibility and sustained growth',
-        'PPC ads: to drive instant results through Google Ads or Meta platforms',
-        'Content calendar: designed to position your brand as a category leader',
-        'Social media tactics: tailored to the behavior of your target audience'
-      ],
-    },
-    {
-      id: 4,
-      title: 'Implementation: Our Experts Take Over',
-      description: 'Once you greenlight the strategy, execution begins. Our team of channel specialists—covering SEO, Paid Media, Content, and Development—activate each campaign component. Whether it&apos;s publishing high-performance landing pages or deploying a full-funnel ad strategy, every action is logged, tracked, and optimized in real-time. You&apos;ll see coordinated efforts and consistent branding across every platform.',
-      top: 'top-48'
-    },
-    {
-      id: 5,
-      title: 'Monitoring & Scaling: Monthly Reporting and Optimization',
-      description: 'Data flows in every day; we turn it into actionable insight. Performance dashboards update in real-time, but each month you receive a structured report. What&apos;s already delivering will be scaled. What&apos;s underperforming will be restructured or replaced. This feedback loop keeps your marketing machine responsive and revenue-focused.',
-      top: 'top-64',
+      title: '1. Discovery & Requirements Analysis',
+      description: 'Comprehensive consultation to understand your business goals, target audience, budget realities, and growth expectations. Our professional team conducts in-depth market research and competitive analysis.',
+      top: 'top-0',
       points: [
         'Traffic shifts by source, location, and user behavior',
         'Keyword movements across organic and paid search',
@@ -46,28 +16,80 @@ export default function Home() {
         'Budget utilization and ROI breakdowns',
       ],
     },
+    {
+      id: 2,
+      title: '2. Comprehensive Digital Audit & Analysis',
+      description: 'State of the art analysis of your complete digital footprint using professional tools including SEMrush,Google Analytics, Ahrefs, and proprietary software',
+      top: 'top-16',
+      points: [
+        'Website performance and user experience evaluation',
+        'SEO strength and search engine visibility assessment',
+        'Social media presence and engagement analysis',
+        'Paid advertising campaign performance review',
+        'Content quality and brand consistency evaluation',
+        'Technical infrastructure and security assessment'
+      ],
+    },
+    {
+      id: 3,
+      title: '3. Strategic Planning & Creative Development',
+      description: 'Custom roadmap development based on data insights and market intelligence. Our creative team designs campaigns that resonate with your audience while driving measurable results.',
+      top: 'top-32',
+      points: [
+        'SEO strategy for long-term organic growth',
+        'PPC campaigns for immediate traffic and conversions',
+        'Content calendar and creative asset development',
+        'Social media tactics and community management',
+        'Email marketing automation and customer journey mapping','Mobile app development and optimization'
+      ],
+    },
+    {
+      id: 4,
+      title: '4. Implementation & Execution',
+      description: 'Our team of certified specialists activate each campaign component with coordination and consistency across all platforms. Real-time monitoring ensures optimal performance.',
+      top: 'top-48',
+       points: [
+        'Project management with clear timelines and deliverables',
+        'Quality assurance and testing protocols',
+        'Brand consistency across all channels',
+        'Performance monitoring and real-time optimization',
+        'Regular communication and progress reporting'
+      ],
+    },
+    {
+      id: 5,
+      title: '5. Monitoring, Scaling & Optimization',
+      description: 'Continuous performance analysis with monthly reporting and strategic adjustments. Our datadriven approach ensures sustainable growth and maximum ROI.',
+      top: 'top-64',
+      points: [
+        'Real-time analytics and performance tracking',
+        'A/B testing for continuous improvement',
+        'Campaign scaling for successful initiatives',
+        'Strategy refinement based on market feedback','Innovation integration for competitive advantage'
+      ],
+    },
   ];
 
   return (
-    <div className="bg-white min-h-screen">
-      {/* Main Title Section - Occupies the initial viewport */}
-      <div className="flex flex-col items-center justify-center px-4 pt-20 pb-6">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 text-center">
-          Our Digital Marketing Process,<br />from Insight to Impact
-        </h2>
-        <p className="mt-4 text-lg text-gray-600 text-justify max-w-3xl">
-          Small businesses don&apos;t thrive on cookie-cutter solutions—and neither should you. What you need isn&apos;t a generic plan, but a tailored strategy that aligns with your budget, your size, and your growth potential. That&apos;s why our packages aren&apos;t pre-defined. Instead, they&apos;re engineered to fit your exact business stage—scalable, performance-tracked, and designed to push you further than competitors who are stuck with one-size-fits-all plans.
-        </p>
-      </div>
-
+   
+<div className="bg-white min-h-screen">
+  {/* Main Title Section - Occupies the initial viewport */}
+  <div className="flex flex-col items-center justify-center px-4 pt-20 pb-6">
+    <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 text-center">
+        Our Digital Marketing Process,<br />from Insight to Impact
+    </h2>
+    <p className="mt-4 text-sm md:text-base text-gray-500 mx-auto max-w-2xl text-center leading-relaxed">
+        Small businesses dontt thrive on cookie-cutter solutions—and neither should you. What you need isnot a generic plan, but a tailored strategy that aligns with your budget, your size, and your growth potential. That&apos;s why our packages aren&apos;t pre-defined. 
+    </p>
+  </div>
       {/* Scrolling section with sticky cards */}
       <div className="relative">
         {cardData.map((card, index) => (
-          <div
-            key={card.id}
-            className={`sticky ${card.top} pt-12 lg:pt-20 px-4 ${index === cardData.length - 1 ? 'pb-20' : ''}`}
-            style={{ minHeight: '80vh' }}
-          >
+         <div
+    key={card.id}
+    className={`sticky ${card.top} pt-6 lg:pt-10 px-4 ${index === cardData.length - 1 ? 'pb-12' : ''}`}
+    style={{ minHeight: '80vh' }}
+>
             {/* Main Content Card */}
             <div className="max-w-6xl mx-auto w-full">
               <div className="bg-gray-50 rounded-3xl overflow-hidden shadow-2xl p-6 sm:p-12 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">

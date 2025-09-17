@@ -11,11 +11,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 py-12 sm:py-20"> {/* Adjusted padding */}
        <div className="text-center max-w-3xl mx-auto">
     {/* Add the new subheading here */}
-    <h1 className="text-sm font-semibold text-purple-600 uppercase tracking-wider">
+    <h1 className="text-xs font-semibold text-purple-600 uppercase tracking-wider">
         Welcome to Grovoz Marketing Company
     </h1>
     <motion.h2 initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} className="text-3xl sm:text-5xl font-bold mt-2">
-        Redefining Standards <span className="text-blue-600">In Digital Marketing</span> 
+        Redefining Standards In<br /><span className="text-blue-600"> Digital Marketing</span> 
     </motion.h2>
     <p className="mt-4 text-base sm:text-lg text-black-600 dark:text-black-300">
         Crafting Digital Impact with Authority, We Ensure Your Brand Isn’t Just Seen, but Respected, Trusted, and Remembered.
