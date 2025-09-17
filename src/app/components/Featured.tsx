@@ -1,13 +1,13 @@
 "use client";
 import { ArrowRight } from "lucide-react";
-
+import Image from "next/image";
 
 export default function Home() {
   const cardData = [
     {
       id: 1,
       title: 'Discovery Call: Understanding Your Goals',
-      description: 'Everything begins with a one-on-one consultation—no forms, no guesswork. During this call, our team listens closely to grasp your business objectives, target audience, budget realities, and growth expectations. This isn’t a sales pitch; it’s where our strategy is anchored. Have a new product? Struggling with brand visibility? Need more qualified leads? This is where we align with your ambitions.',
+      description: 'Everything begins with a one-on-one consultation—no forms, no guesswork. During this call, our team listens closely to grasp your business objectives, target audience, budget realities, and growth expectations. This isn&apos;t a sales pitch; it&apos;s where our strategy is anchored. Have a new product? Struggling with brand visibility? Need more qualified leads? This is where we align with your ambitions.',
       top: 'top-0'
     },
     {
@@ -31,13 +31,13 @@ export default function Home() {
     {
       id: 4,
       title: 'Implementation: Our Experts Take Over',
-      description: 'Once you greenlight the strategy, execution begins. Our team of channel specialists—covering SEO, Paid Media, Content, and Development—activate each campaign component. Whether it’s publishing high-performance landing pages or deploying a full-funnel ad strategy, every action is logged, tracked, and optimized in real-time. You’ll see coordinated efforts and consistent branding across every platform.',
+      description: 'Once you greenlight the strategy, execution begins. Our team of channel specialists—covering SEO, Paid Media, Content, and Development—activate each campaign component. Whether it&apos;s publishing high-performance landing pages or deploying a full-funnel ad strategy, every action is logged, tracked, and optimized in real-time. You&apos;ll see coordinated efforts and consistent branding across every platform.',
       top: 'top-48'
     },
     {
       id: 5,
       title: 'Monitoring & Scaling: Monthly Reporting and Optimization',
-      description: 'Data flows in every day; we turn it into actionable insight. Performance dashboards update in real-time, but each month you receive a structured report. What’s already delivering will be scaled. What’s underperforming will be restructured or replaced. This feedback loop keeps your marketing machine responsive and revenue-focused.',
+      description: 'Data flows in every day; we turn it into actionable insight. Performance dashboards update in real-time, but each month you receive a structured report. What&apos;s already delivering will be scaled. What&apos;s underperforming will be restructured or replaced. This feedback loop keeps your marketing machine responsive and revenue-focused.',
       top: 'top-64',
       points: [
         'Traffic shifts by source, location, and user behavior',
@@ -53,21 +53,21 @@ export default function Home() {
       {/* Main Title Section - Occupies the initial viewport */}
       <div className="flex flex-col items-center justify-center px-4 pt-20 pb-6">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gray-900 text-center">
-Our Digital Marketing Process,
-from Insight to Impact        </h2>
+          Our Digital Marketing Process,<br />from Insight to Impact
+        </h2>
         <p className="mt-4 text-lg text-gray-600 text-justify max-w-3xl">
-          Small businesses don’t thrive on cookie-cutter solutions—and neither should you. What you need isn’t a generic plan, but a tailored strategy that aligns with your budget, your size, and your growth potential. That’s why our packages aren’t pre-defined. Instead, they’re engineered to fit your exact business stage—scalable, performance-tracked, and designed to push you further than competitors who are stuck with one-size-fits-all plans.
+          Small businesses don&apos;t thrive on cookie-cutter solutions—and neither should you. What you need isn&apos;t a generic plan, but a tailored strategy that aligns with your budget, your size, and your growth potential. That&apos;s why our packages aren&apos;t pre-defined. Instead, they&apos;re engineered to fit your exact business stage—scalable, performance-tracked, and designed to push you further than competitors who are stuck with one-size-fits-all plans.
         </p>
       </div>
 
       {/* Scrolling section with sticky cards */}
       <div className="relative">
         {cardData.map((card, index) => (
-        <div
-  key={card.id}
-    className={`sticky ${card.top} pt-12 lg:pt-20 px-4 ${index === cardData.length - 1 ? 'pb-20' : ''}`}
-      style={{ minHeight: '80vh' }}
->
+          <div
+            key={card.id}
+            className={`sticky ${card.top} pt-12 lg:pt-20 px-4 ${index === cardData.length - 1 ? 'pb-20' : ''}`}
+            style={{ minHeight: '80vh' }}
+          >
             {/* Main Content Card */}
             <div className="max-w-6xl mx-auto w-full">
               <div className="bg-gray-50 rounded-3xl overflow-hidden shadow-2xl p-6 sm:p-12 lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
@@ -86,12 +86,12 @@ from Insight to Impact        </h2>
                       ))}
                     </ul>
                   )}
- <div className="mt-6">
-  <a href="#" className="group inline-flex items-center gap-2 px-6 py-3 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors">
-    Learn more
-    <ArrowRight className="h-5 w-5 transform transition-transform group-hover:rotate-45" />
-  </a>
-</div>
+                  <div className="mt-6">
+                    <a href="#" className="group inline-flex items-center gap-2 px-6 py-3 text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-colors">
+                      Learn more
+                      <ArrowRight className="h-5 w-5 transform transition-transform group-hover:rotate-45" />
+                    </a>
+                  </div>
                 </div>
 
                 {/* Right Column - Phone Mockup */}
@@ -108,7 +108,13 @@ from Insight to Impact        </h2>
                       <div className="absolute -inset-20 bg-gradient-to-br from-gray-300 to-gray-100 transform -rotate-12"></div>
                       <div className="relative z-10 p-6 rounded-lg bg-white/70 backdrop-blur-md">
                         <div className="flex items-center justify-end">
-                          <img src="https://placehold.co/40x25/ffffff/000000?text=Visa" alt="Visa logo" className="h-6" />
+                          <Image
+                            src="https://placehold.co/40x25/ffffff/000000?text=Visa"
+                            alt="Visa logo"
+                            width={40}
+                            height={25}
+                            className="h-6"
+                          />
                         </div>
                         <div className="mt-4">
                           <p className="font-mono text-xs text-gray-600">•••• •••• •••• 9112</p>

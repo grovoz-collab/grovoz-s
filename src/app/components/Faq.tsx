@@ -1,13 +1,19 @@
-  "use client";
-  import React, { useState } from 'react';
-  import { Mail, Phone, MapPin } from "lucide-react";
+"use client";
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin } from "lucide-react";
 
-  // Main App component combining the contact and FAQ sections
-  const App = () => {
+// Main App component combining the contact and FAQ sections
+const App = () => {
     const faqs = [
       {
         question: "What Will My Marketing Budget Be and How Do I Find It?",
-        answer: "Your marketing budget isn’t guesswork. It’s a reflection of your business size, goals, and the competitive landscape you’re up against. That’s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.Industry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that’s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we’ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential.Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity."
+        answer: (
+            <>
+                <p>Your marketing budget isn&apos;t guesswork. It&apos;s a reflection of your business size, goals, and the competitive landscape you&apos;re up against. That&apos;s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.</p>
+                <p>Industry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that&apos;s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.</p>
+                <p>Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we&apos;ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential.Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity.</p>
+            </>
+        )
       },
       {
         question: "How does the pricing work?",
@@ -41,23 +47,26 @@
               Get in touch
             </h1>
             <p className="text-lg text-gray-700 mb-8">
-              We'd love to hear from you! Send us a message and we'll respond as soon as possible.
+              We&apos;d love to hear from you! Send us a message and we&apos;ll respond as soon as possible.
             </p>
 
-           {/* Contact Details */}
-<div className="space-y-6 text-gray-700 mb-12">
-    <div className="flex items-center space-x-3">
-        <Mail className="h-5 w-5 text-gray-500" />
-        <a href="mailto:support@example.com" className="hover:underline">support@example.com</a>
-    </div>
-    <div className="flex items-center space-x-3">
-        <Phone className="h-5 w-5 text-gray-500" />
-        <a href="tel:+15551234567" className="hover:underline">+1 (555) 123-4567</a>
-    </div>
-</div>
+            {/* Contact Details */}
+            <div className="space-y-6 text-gray-700 mb-12">
+                <div className="flex items-center space-x-3">
+                    <Mail className="h-5 w-5 text-gray-500" />
+                    <a href="mailto:support@example.com" className="hover:underline">support@example.com</a>
+                </div>
+                <div className="flex items-center space-x-3">
+                    <Phone className="h-5 w-5 text-gray-500" />
+                    <a href="tel:+15551234567" className="hover:underline">+1 (555) 123-4567</a>
+                </div>
+                <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-gray-500" />
+                    <a href="https://maps.google.com/?q=123%20Main%20St,%20Dubai" target="_blank" rel="noopener noreferrer" className="hover:underline">123 Main St, Dubai, UAE</a>
+                </div>
+            </div>
 
             {/* Contact Form */}
-            {/* ... (Your form code remains largely the same, maybe add shadow-sm to inputs) */}
             <form className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
@@ -68,9 +77,9 @@
                     <input type="email" id="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="you@example.com" />
                 </div>
                 <div>
-  <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-  <textarea id="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="How can we help you?"></textarea>
-</div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="How can we help you?"></textarea>
+                </div>
                 <button type="submit" className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                     Send Message
                 </button>
@@ -99,13 +108,12 @@
   );
 };
 
-  // AccordionItem component for each FAQ
-  const AccordionItem = ({ question, answer }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const AccordionItem = ({ question, answer }: { question: string, answer: React.ReactNode }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleOpen = () => {
-      setIsOpen(!isOpen);
-    };
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
 
     return (
 <div className={`border border-gray-200 rounded-xl transition-all duration-300 ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>

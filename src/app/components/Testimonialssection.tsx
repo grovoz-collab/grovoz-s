@@ -1,6 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import Image from 'next/image';
+
 
 const testimonials = [
  {
@@ -102,11 +104,13 @@ export default function TestimonialsSection() {
             </p>
 
             <div className="flex items-center gap-4 mt-auto">
-              <img
-                src={testimonial.avatar}
-                alt={testimonial.name}
-                className="w-12 h-12 rounded-full border-2 border-white/20"
-              />
+              <Image
+  src={testimonial.avatar}
+  alt={testimonial.name}
+  width={48} // Tailwind 'w-12' is 3rem or 48px
+  height={48} // Tailwind 'h-12' is 3rem or 48px
+  className="rounded-full border-2 border-white/20"
+/>
               <div>
                 <div className="font-semibold text-white">
                   {testimonial.name}
