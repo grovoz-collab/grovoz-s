@@ -57,3 +57,9 @@ html, body {
 .rotate-on-scroll {
   transition: transform 0.2s linear;
 }
+
+/* In your globals.css or a dedicated stylesheet */
+.brand-name {
+  font-weight: bold;
+  color: #007bff; /* A nice shade of blue */
+}

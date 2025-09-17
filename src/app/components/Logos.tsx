@@ -4,22 +4,23 @@
 import Image from 'next/image'; // Import the Image component
 
 export default function Logos() {
-  const logos = [
-    { name: 'Acme', src: '../meydan.svg' },
-    { name: 'Globex', src: '/globex-logo.svg' },
-    { name: 'Umbrella', src: '/umbrella-logo.svg' },
-    { name: 'Soylent', src: '/soylent-logo.svg' },
-    { name: 'Initech', src: '/initech-logo.svg' },
-    { name: 'Hooli', src: '/hooli-logo.svg' },
-  ];
+ const logos = [
+  { name: 'Google', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg' },
+  { name: 'Facebook', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg' },
+  { name: 'Wordpress', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/wordpress.svg' },
+  { name: 'Semrush', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/semrush.svg' },
+  { name: 'Bitrix24', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/bitrix24.svg' },
+  { name: 'Frappe', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/frappe.svg' },
+  { name: 'Github', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg' },
+];
   const allLogos = [...logos, ...logos, ...logos]; // Duplicated multiple times for longer seamless loop
 
   return (
     <section className="bg-white py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-6 text-center text-sm text-zinc-500">
+        <h3 className="mb-6 text-center text-1xl font-semibold text-blue-500">
           Trusted by Companies all over the world
-        </p>
+        </h3>
         <div className="relative overflow-x-hidden">
           <div className="inline-flex animate-slide-right whitespace-nowrap">
             {allLogos.map((logo, index) => (
