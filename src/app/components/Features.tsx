@@ -66,7 +66,7 @@ export default function Features() {
     <section id="features" className="py-20 bg-zinc-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold">What You Get When You Work With Us</h2>
+          <h2 className="text-3xl font-bold">What You Get When You Partner With Us</h2>
           <p className="mt-2 text-zinc-600">Use the building blocks you need today and add more as you grow.</p>
         </div>
         {/* Use motion.div as the parent container with its variants */}
@@ -93,3 +93,5 @@ export default function Features() {
     </section>
   );
 }
+
+

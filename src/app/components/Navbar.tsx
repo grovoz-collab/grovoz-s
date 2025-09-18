@@ -49,7 +49,7 @@ export default function Navbar() {
 
         {/* Desktop menu */}
         <nav className="hidden md:flex items-center gap-8 text-sm">
-          <a href="#products" className="hover:text-brand-600">Products</a>
+          <a href="#services" className="hover:text-brand-600">Services</a>
           <a href="#features" className="hover:text-brand-600">Features</a>
           <a href="#developers" className="hover:text-brand-600">Developers</a>
           <a href="#about" className="hover:text-brand-600">About</a>
