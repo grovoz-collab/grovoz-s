@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 const App = () => {
     const faqs = [
       {
-        question: "What Will My Marketing Budget Be and How Do I Find It?",
+        question: "What should my marketing budget be for Dubai market success?",
         answer: (
             <>
                 <p>Your marketing budget isn&apos;t guesswork. It&apos;s a reflection of your business size, goals, and the competitive landscape you&apos;re up against. That&apos;s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.</p>
@@ -47,14 +47,14 @@ const App = () => {
               Get in touch
             </h1>
             <p className="text-lg text-gray-700 mb-8">
-              We&apos;d love to hear from you! Send us a message and we&apos;ll respond as soon as possible.
+              We would love to hear from you! Send us a message and we will respond as soon as possible.
             </p>
 
             {/* Contact Details */}
             <div className="space-y-6 text-gray-700 mb-12">
                 <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-gray-500" />
-                    <a href="mailto:support@example.com" className="hover:underline">support@example.com</a>
+                    <a href="mailto: hello@grovoz.com" className="hover:underline"> hello@grovoz.com</a>
                 </div>
                 <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-gray-500" />
@@ -62,7 +62,7 @@ const App = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                     <MapPin className="h-5 w-5 text-gray-500" />
-                    <a href="https://maps.google.com/?q=123%20Main%20St,%20Dubai" target="_blank" rel="noopener noreferrer" className="hover:underline">123 Main St, Dubai, UAE</a>
+                    <a href="https://maps.google.com/?q=123%20Main%20St,%20Dubai" target="_blank" rel="noopener noreferrer" className="hover:underline">Suite No. 1753,, Valamkottil Towers, Kakkanadu, Kochi</a>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@ const AccordionItem = ({ question, answer }: { question: string, answer: React.R
         <h2 id={`accordion-heading-${question.replace(/\s+/g, '-')}`} className="w-full">
           <button
             type="button"
-            className="flex items-center justify-between w-full p-4 text-left font-semibold text-lg text-gray-800 rounded-xl transition-colors duration-200 hover:bg-gray-100"
+            className="flex items-center justify-between w-full p-4 text-left font-semibold text-lg text-gray-800 rounded-xl transition-colors duration-200 hover:bg-blue-100"
             onClick={toggleOpen}
             aria-expanded={isOpen}
             aria-controls={`accordion-content-${question.replace(/\s+/g, '-')}`}
