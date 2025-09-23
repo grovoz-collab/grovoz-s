@@ -1,153 +1,48 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin } from "lucide-react";
 
 // Main App component combining the contact and FAQ sections
 const App = () => {
-  const form = useRef();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScriptsLoaded, setIsScriptsLoaded] = useState(false);
-
-  useEffect(() => {
-    // This is a workaround for loading external scripts in a single-file environment.
-    const loadScripts = async () => {
-      // Load toastify-js CSS
-      const toastifyCss = document.createElement('link');
-      toastifyCss.rel = 'stylesheet';
-      toastifyCss.href = 'https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css';
-      document.head.appendChild(toastifyCss);
-
-      // Load EmailJS script
-      const emailjsScript = document.createElement('script');
-      emailjsScript.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-      document.head.appendChild(emailjsScript);
-
-      // Wait for scripts to load before setting state
-      emailjsScript.onload = () => {
-        // Load toastify-js script
-        const toastifyJs = document.createElement('script');
-        toastifyJs.src = 'https://cdn.jsdelivr.net/npm/toastify-js';
-        document.head.appendChild(toastifyJs);
-
-        toastifyJs.onload = () => {
-          setIsScriptsLoaded(true);
-        };
-      };
-    };
-
-    if (typeof window.emailjs === 'undefined' || typeof window.Toastify === 'undefined') {
-      loadScripts();
-    } else {
-      setIsScriptsLoaded(true);
-    }
-  }, []);
-
-  const faqs = [
-    {
-      question: "What should my marketing budget be for Dubai market success?",
-      answer: (
-        <>
-          <p>Your marketing budget isn't guesswork. It's a reflection of your business size, goals, and the competitive landscape you're up against. That's why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.</p>
-          <p>Industry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that's exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.</p>
-          <p>Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we'll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential.Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity.</p>
-        </>
-      )
-    },
-    {
-      question: "How does the pricing work?",
-      answer: "We offer a flexible pricing model with a free tier for individuals, a Pro plan for small teams, and a custom enterprise solution. You can find detailed information on our pricing page, which outlines all the features included in each plan."
-    },
-    {
-      question: "Is there a mobile application available?",
-      answer: "Yes, our mobile application is available for both iOS and Android devices. It provides a complete set of features, allowing you to access your projects and stay connected on the go. You can download it from the respective app stores."
-    },
-    {
-      question: "Can I integrate with other services?",
-      answer: "Absolutely. Our platform supports a wide range of integrations with popular tools like Slack, Google Drive, and Trello. We have a dedicated integrations marketplace where you can explore and connect with your favorite services to streamline your workflow."
-    },
-    {
-      question: "What is your refund policy?",
-      answer: "We offer a 30-day money-back guarantee for all our paid plans. If you are not completely satisfied with our service, you can request a full refund within the first 30 days of your subscription, no questions asked."
-    },
-    {
-      question: "How do I contact customer support?",
-      answer: "You can reach our customer support team via email at support@example.com, or through the live chat feature available within the application. Our support team is available 24/7 to assist you with any questions or issues you may have."
-    }
-  ];
-
-  const services = [
-    "Search Engine Optimization",
-    "Pay-Per-Click Advertising",
-    "Web Design & Development",
-    "Social Media Marketing",
-    "Influencer Marketing",
-    "Email Marketing",
-    "Marketing Strategy"
-  ];
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!isScriptsLoaded) {
-      // Show a loading message if scripts aren't ready
-      window.Toastify({
-        text: "Please wait, scripts are still loading...",
-        duration: 3000,
-        gravity: "bottom",
-        position: "center",
-        backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
-      }).showToast();
-      return;
-    }
-    setIsSubmitting(true);
-
-   const serviceId = 'service_igs01ac'; // Replace with your Service ID
-    const templateId = 'template_xf20zdf'; // Replace with your Template ID
-    const userId = 'jRDEV_4lZ_cOvSRKu'; // Replace with your User ID (Public Key)
-
-    if (serviceId === 'YOUR_SERVICE_ID' || templateId === 'YOUR_TEMPLATE_ID' || userId === 'YOUR_USER_ID') {
-        window.Toastify({
-            text: "Please replace the placeholder EmailJS credentials in the code.",
-            duration: 5000,
-            gravity: "bottom",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #ef4444, #dc2626)",
-        }).showToast();
-        setIsSubmitting(false);
-        return;
-    }
-
-    window.emailjs.sendForm(serviceId, templateId, form.current, userId)
-      .then((result) => {
-        console.log('Email successfully sent!', result.text);
-        window.Toastify({
-            text: "Message sent successfully! We'll get back to you soon.",
-            duration: 3000,
-            gravity: "bottom",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #22c55e, #16a34a)",
-        }).showToast();
-        form.current.reset(); // Reset form fields
-      }, (error) => {
-        console.error('Failed to send email:', error.text);
-        window.Toastify({
-            text: "Failed to send message. Please try again later.",
-            duration: 5000,
-            gravity: "bottom",
-            position: "center",
-            backgroundColor: "linear-gradient(to right, #ef4444, #dc2626)",
-        }).showToast();
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
+    const faqs = [
+      {
+        question: "What should my marketing budget be for Dubai market success?",
+        answer: (
+            <>
+                <p>Your marketing budget isn&apos;t guesswork. It&apos;s a reflection of your business size, goals, and the competitive landscape you&apos;re up against. That&apos;s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.</p>
+                <p>Industry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that&apos;s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.</p>
+                <p>Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we&apos;ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential.Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity.</p>
+            </>
+        )
+      },
+      {
+        question: "How does the pricing work?",
+        answer: "We offer a flexible pricing model with a free tier for individuals, a Pro plan for small teams, and a custom enterprise solution. You can find detailed information on our pricing page, which outlines all the features included in each plan."
+      },
+      {
+        question: "Is there a mobile application available?",
+        answer: "Yes, our mobile application is available for both iOS and Android devices. It provides a complete set of features, allowing you to access your projects and stay connected on the go. You can download it from the respective app stores."
+      },
+      {
+        question: "Can I integrate with other services?",
+        answer: "Absolutely. Our platform supports a wide range of integrations with popular tools like Slack, Google Drive, and Trello. We have a dedicated integrations marketplace where you can explore and connect with your favorite services to streamline your workflow."
+      },
+      {
+        question: "What is your refund policy?",
+        answer: "We offer a 30-day money-back guarantee for all our paid plans. If you are not completely satisfied with our service, you can request a full refund within the first 30 days of your subscription, no questions asked."
+      },
+      {
+        question: "How do I contact customer support?",
+        answer: "You can reach our customer support team via email at support@example.com, or through the live chat feature available within the application. Our support team is available 24/7 to assist you with any questions or issues you may have."
+      }
+    ];
 
   return (
     <div className="bg-gray-50 min-h-screen font-inter p-4 sm:p-6 lg:p-12">
       <div className="mx-auto max-w-7xl">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16">
           {/* Left Column: Contact Details and Form */}
-  <div id="contact" className="py-12 lg:py-24">
+          <div className="py-12 lg:py-24">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
               Get in touch
             </h1>
@@ -172,38 +67,23 @@ const App = () => {
             </div>
 
             {/* Contact Form */}
-            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+            <form className="space-y-6">
                 <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" name="user_name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="Your name" />
+                    <input type="text" id="name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="Your name" />
                 </div>
                 <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" name="user_email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="you@example.com" />
-                </div>
-                <div>
-                    <label htmlFor="service" className="block text-sm font-medium text-gray-700">Service of Interest</label>
-                    <select id="service" name="service_of_interest" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
-                      <option value="">Select a service...</option>
-                      {services.map((service, index) => (
-                        <option key={index} value={service}>{service}</option>
-                      ))}
-                    </select>
+                    <input type="email" id="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="you@example.com" />
                 </div>
                 <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                    <textarea id="message" rows={4} name="message" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="How can we help you?"></textarea>
+                    <textarea id="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="How can we help you?"></textarea>
                 </div>
-                <button 
-                  type="submit" 
-                  className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400"
-                  disabled={isSubmitting || !isScriptsLoaded}
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                <button type="submit" className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Send Message
                 </button>
             </form>
-
-         
           </div>
 
           {/* Right Column: FAQ Section */}
@@ -228,15 +108,15 @@ const App = () => {
   );
 };
 
-const AccordionItem = ({ question, answer }) => {
+const AccordionItem = ({ question, answer }: { question: string, answer: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <div className={`border border-gray-200 rounded-xl transition-all duration-300 ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>
+    return (
+<div className={`border border-gray-200 rounded-xl transition-all duration-300 ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>
         <h2 id={`accordion-heading-${question.replace(/\s+/g, '-')}`} className="w-full">
           <button
             type="button"
@@ -261,14 +141,14 @@ const AccordionItem = ({ question, answer }) => {
           id={`accordion-content-${question.replace(/\s+/g, '-')}`}
           role="region"
           aria-labelledby={`accordion-heading-${question.replace(/\s+/g, '-')}`}
-          className={`overflow-hidden transition-max-h duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}
+          className={`overflow-hidden transition-max-height duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}
         >
           <div className="p-4 pt-0 text-gray-600 leading-relaxed">
             {answer}
           </div>
         </div>
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
-export default App;
+  export default App;
