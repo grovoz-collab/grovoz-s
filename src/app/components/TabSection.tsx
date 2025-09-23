@@ -111,7 +111,7 @@ export default function TabSection() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-<section id="services" className="relative max-w-6xl mx-auto px-6 py-16">
+<section id="whyus" className="relative max-w-6xl mx-auto px-6 py-16">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
         What You Get When You Partner With Us
       </h2>

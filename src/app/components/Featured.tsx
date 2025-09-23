@@ -74,7 +74,7 @@ export default function Home() {
    
 <div className="bg-white min-h-screen">
   {/* Main Title Section - Occupies the initial viewport */}
-  <div className="flex flex-col items-center justify-center px-4 pt-20 pb-6">
+  <div id="process" className="flex flex-col items-center justify-center px-4 pt-20 pb-6">
     <h2 className="text-3xl lg:text-4xl font-bold tracking-tight text-gray-900 text-center">
         Our Digital Marketing Process,<br />from Insight to Impact
     </h2>

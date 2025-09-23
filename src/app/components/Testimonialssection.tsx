@@ -96,7 +96,7 @@ export default function TestimonialsSection() {
               ))}
             </div>
 
-            <Quote className="w-8 h-8 text-blue-400 mb-4 opacity-60" />
+            <Quote className="w-8 h-8 text-black-400 mb-4 opacity-60" />
 
             {/* Add flex-grow to the paragraph */}
             <p className="text-slate-100 leading-relaxed mb-6 text-lg flex-grow">
@@ -115,7 +115,7 @@ export default function TestimonialsSection() {
                 <div className="font-semibold text-white">
                   {testimonial.name}
                 </div>
-                <div className="text-slate-300 text-sm">
+                <div className="text-purple-300 text-sm">
                   {testimonial.role}
                 </div>
                 <div className="text-slate-400 text-sm">
