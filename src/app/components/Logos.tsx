@@ -9,8 +9,8 @@ export default function Logos() {
   { name: 'Facebook', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg' },
   { name: 'Wordpress', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/wordpress.svg' },
   { name: 'Semrush', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/semrush.svg' },
-  { name: 'Bitrix24', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/bitrix24.svg' },
-  { name: 'Frappe', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/frappe.svg' },
+  { name: 'Bitrix24', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/zoho.svg' },
+  { name: 'Frappe', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/yoast.svg' },
   { name: 'Github', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg' },
 ];
   const allLogos = [...logos, ...logos, ...logos]; // Duplicated multiple times for longer seamless loop
