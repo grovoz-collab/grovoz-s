@@ -94,7 +94,7 @@ const tabs = [
   },
 ];
 
-// Animation variants
+// Animation variants for card grid content
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
@@ -102,6 +102,7 @@ const containerVariants = {
     transition: { staggerChildren: 0.15 },
   },
 };
+// Animation variants for individual cards
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
@@ -111,32 +112,37 @@ export default function TabSection() {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-<section id="whyus" className="relative max-w-6xl mx-auto px-6 py-16">
+    <section id="whyus" className="relative   max-w-6xl mx-auto px-6 py-16">
+      {/* Centered Span Container */}
+     
+     
+
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
         What You Get When You Partner With Us
       </h2>
 
       {/* Stepper Tabs */}
-      <div className="flex justify-center gap-12 mb-12 flex-wrap">
+      <div className="flex justify-center gap-6 sm:gap-12 mb-12 flex-wrap">
         {tabs.map((tab, i) => {
           const Icon = tab.icon;
           return (
             <button
               key={i}
               onClick={() => setActiveTab(i)}
-              className="flex flex-col items-center focus:outline-none group"
+              // Enhanced button transition and scale on hover
+              className="flex flex-col items-center focus:outline-none group transition-transform duration-300 transform hover:scale-[1.02]"
             >
               <div
-                className={`w-16 h-16 flex items-center justify-center rounded-full border-2 transition-all ${
+                className={`w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
                   activeTab === i
-                    ? "bg-blue-600 text-white border-blue-600 shadow-lg"
-                    : "bg-white text-gray-500 border-gray-300 group-hover:border-blue-400"
+                    ? "bg-blue-600 text-white border-blue-600 shadow-xl ring-4 ring-blue-300/50" // Active state with ring and stronger shadow
+                    : "bg-white text-gray-500 border-gray-300 group-hover:border-blue-400 group-hover:shadow-md"
                 }`}
               >
                 <Icon size={28} />
               </div>
               <span
-                className={`mt-3 font-medium text-sm md:text-base transition ${
+                className={`mt-3 text-center font-medium text-xs sm:text-base transition ${
                   activeTab === i ? "text-blue-600" : "text-gray-600 group-hover:text-blue-500"
                 }`}
               >
@@ -148,7 +154,7 @@ export default function TabSection() {
       </div>
 
       {/* Tab Content as Cards */}
-      <div className="relative bg-white shadow-xl rounded-2xl p-8 pb-28">
+      <div className="relative bg-white shadow-xl rounded-2xl p-6 sm:p-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -161,15 +167,21 @@ export default function TabSection() {
             {tabs[activeTab].items.map(({ icon: Icon, title, desc }) => (
               <motion.div
                 key={title}
-                className="p-6 border border-blue-200 rounded-xl bg-white shadow-sm hover:shadow-lg hover:hover:border-purple-500  hover:bg-gray-50  transition-all duration-300"
+                // Card hover effects: translate-y for lift, shadow, and border color change
+                className="p-6 border border-blue-200 rounded-xl bg-white shadow-sm transition-all duration-300 
+                           hover:shadow-xl hover:shadow-blue-200/50 
+                           hover:border-blue-500 
+                           hover:-translate-y-1 relative group"
                 variants={itemVariants}
               >
+                {/* Icon container with hover animation for rotation */}
                 <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: 1 }}
+                  whileHover={{ rotate: 4, scale: 1.05 }} // Spin and slight scale on hover
+                  transition={{ duration: 0.3 }}
+                  className="h-10 w-10 flex items-center justify-center rounded-lg bg-blue-50/70 mb-3"
                 >
-                  <Icon className="h-6 w-6 mb-3 text-blue-600" />
+                  <Icon className="h-6 w-6 text-blue-600" />
                 </motion.div>
                 <h3 className="font-semibold text-gray-800">{title}</h3>
                 <p className="text-sm text-zinc-600 mt-1">{desc}</p>
@@ -177,18 +189,6 @@ export default function TabSection() {
             ))}
           </motion.div>
         </AnimatePresence>
-
-        {/* Sticky CTA Button */}
-        <div className="absolute bottom-6 left-0 right-0 flex justify-center">
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="#contact" // Update to your link
-            className="px-8 py-4 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition"
-          >
-            Book Your Free Strategy Session
-          </motion.a>
-        </div>
       </div>
     </section>
   );

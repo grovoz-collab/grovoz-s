@@ -1,7 +1,11 @@
-import Link from "next/link";
+"use client";
+import React, { useState } from "react";
 import { ArrowRight } from "lucide-react";
+import ContactForm from "./ContactForm";
 
-export default function CTA() {
+const CTA: React.FC = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <section id="demo" className="py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -16,22 +20,25 @@ export default function CTA() {
             </p>
           </div>
 
-          {/* New Container for Text and Button */}
+          {/* Right side with button */}
           <div className="flex-shrink-0 flex flex-col items-center justify-center gap-4 text-center">
-            {/* The Text Above the Button */}
             <p className="text-sm font-medium text-white/80">Ready to get started?</p>
 
-            {/* The Button */}
-            <Link
-              href="#contact"
+            <button
+              onClick={() => setIsFormOpen(true)}
               className="group inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-blue-600 font-bold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
             >
               Book Your Free Strategy Call
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Contact Form Modal */}
+      <ContactForm isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} />
     </section>
   );
-}
+};
+
+export default CTA;

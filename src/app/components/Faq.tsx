@@ -1,154 +1,194 @@
 "use client";
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin } from "lucide-react";
+import React, { useState } from "react";
+// Removed unused imports: Mail, Phone, MapPin, Send as the contact section is removed.
 
-// Main App component combining the contact and FAQ sections
-const App = () => {
-    const faqs = [
-      {
-        question: "What should my marketing budget be for Dubai market success?",
-        answer: (
-            <>
-                <p>Your marketing budget isn&apos;t guesswork. It&apos;s a reflection of your business size, goals, and the competitive landscape you&apos;re up against. That&apos;s why we start with a free discovery call where we analyze your revenue, target audience, and current market position to define the smartest path forward.</p>
-                <p>Industry benchmarks suggest investing 7 to 12% of annual revenue into marketing. For SMEs, that can feel steep, but that&apos;s exactly why we design ROI-driven strategies that make even limited funds deliver measurable growth.</p>
-                <p>Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, we&apos;ll pinpoint where you stand today, uncover untapped opportunities, and recommend a budget that aligns with your growth potential.Our primary goal is to provide a seamless and intuitive experience for managing your projects, allowing you to focus on creativity and collaboration. We aim to simplify complex workflows and boost team productivity.</p>
-            </>
-        )
-      },
-      {
-        question: "How does the pricing work?",
-        answer: "We offer a flexible pricing model with a free tier for individuals, a Pro plan for small teams, and a custom enterprise solution. You can find detailed information on our pricing page, which outlines all the features included in each plan."
-      },
-      {
-        question: "Is there a mobile application available?",
-        answer: "Yes, our mobile application is available for both iOS and Android devices. It provides a complete set of features, allowing you to access your projects and stay connected on the go. You can download it from the respective app stores."
-      },
-      {
-        question: "Can I integrate with other services?",
-        answer: "Absolutely. Our platform supports a wide range of integrations with popular tools like Slack, Google Drive, and Trello. We have a dedicated integrations marketplace where you can explore and connect with your favorite services to streamline your workflow."
-      },
-      {
-        question: "What is your refund policy?",
-        answer: "We offer a 30-day money-back guarantee for all our paid plans. If you are not completely satisfied with our service, you can request a full refund within the first 30 days of your subscription, no questions asked."
-      },
-      {
-        question: "How do I contact customer support?",
-        answer: "You can reach our customer support team via email at support@example.com, or through the live chat feature available within the application. Our support team is available 24/7 to assist you with any questions or issues you may have."
-      }
-    ];
+// AccordionItem Component
+const AccordionItem = ({
+  question,
+  answer,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-gray-50 min-h-screen font-inter p-4 sm:p-6 lg:p-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="lg:grid lg:grid-cols-2 lg:gap-16">
-          {/* Left Column: Contact Details and Form */}
-          <div className="py-12 lg:py-24">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
-              Get in touch
-            </h1>
-            <p className="text-lg text-gray-700 mb-8">
-              We would love to hear from you! Send us a message and we will respond as soon as possible.
-            </p>
+    <div
+      className={`rounded-2xl shadow-xl border border-gray-100 bg-white/90 backdrop-blur-sm transition-all duration-300 overflow-hidden ${
+        isOpen ? "ring-4 ring-blue-500/50 scale-[1.005]" : "hover:shadow-2xl"
+      }`}
+    >
+      <h2>
+        <button
+          type="button"
+          className="flex items-center justify-between w-full p-6 text-left font-extrabold text-lg text-gray-800 transition-all"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span>{question}</span>
+          <span
+            className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white transform transition-transform duration-300 ${
+              isOpen ? "rotate-180 shadow-md" : "rotate-0"
+            }`}
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </button>
+      </h2>
 
-            {/* Contact Details */}
-            <div className="space-y-6 text-gray-700 mb-12">
-                <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-gray-500" />
-                    <a href="mailto: hello@grovoz.com" className="hover:underline"> hello@grovoz.com</a>
-                </div>
-                <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-gray-500" />
-                    <a href="tel:+15551234567" className="hover:underline">+1 (555) 123-4567</a>
-                </div>
-                <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-gray-500" />
-                    <a href="https://maps.google.com/?q=123%20Main%20St,%20Dubai" target="_blank" rel="noopener noreferrer" className="hover:underline">Suite No. 1753,, Valamkottil Towers, Kakkanadu, Kochi</a>
-                </div>
-            </div>
-
-            {/* Contact Form */}
-            <form className="space-y-6">
-                <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="Your name" />
-                </div>
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="you@example.com" />
-                </div>
-                <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                    <textarea id="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2" placeholder="How can we help you?"></textarea>
-                </div>
-                <button type="submit" className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Send Message
-                </button>
-            </form>
-          </div>
-
-          {/* Right Column: FAQ Section */}
-          <div className="py-12 lg:py-24">
-            <div className="text-center mb-10">
-              <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 tracking-tight mb-2">
-                Frequently Asked Questions
-              </h1>
-              <p className="text-lg text-gray-600 max-w-xl mx-auto">
-                Find answers to the most common questions about our product and services.
-              </p>
-            </div>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </div>
-        </div>
+      <div
+        style={{ transition: 'max-height 0.5s ease-in-out, opacity 0.5s ease-in-out' }}
+        className={`overflow-hidden text-gray-700 ${
+          isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="px-6 pb-6 pt-0 leading-relaxed text-base space-y-3">{answer}</div>
       </div>
     </div>
   );
 };
 
-const AccordionItem = ({ question, answer }: { question: string, answer: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false);
+// Main App component
+const App = () => {
+  const faqs = [
+    {
+      question: "What Will My Marketing Budget Be and How Do I Find It?",
+      answer: (
+        <>
+          <p>
+            Your marketing budget is not guesswork. It is  a reflection of your
+            business size, goals, and the competitive landscape you are up
+            against. That is why we start with a free discovery call where we
+            analyze your revenue, target audience, and current market position
+            to define the smartest path forward.
+          </p>
+          <p>
+            Industry benchmarks suggest investing 7 to 12% of annual revenue
+            into marketing. For SMEs, that can feel steep, but that is  exactly
+            why we design ROI-driven strategies that make even limited funds
+            deliver measurable growth.
+          </p>
+           <p>
+            Through our Digital Marketing Audit, powered by proprietary tools and competitive analysis, 
+            we will pinpoint where you stand today, uncover untapped opportunities, 
+            and recommend a budget that aligns with your growth potential.
+          </p>
+        </>
+      ),
+    },
+    {
+      question: "How long before I see results with digital marketing?",
+      answer: (
+        <>
+          <p>
+            Your marketing budget is not guesswork. It is a reflection of your
+            business size, goals, and the competitive landscape youre up
+            against. That is why we start with a free discovery call where we
+            analyze your revenue, target audience, and current market position
+            to define the smartest path forward.
+          </p>    </> ) },
+    {
+      question: "Do you work with businesses anywhere in the world?",
+      answer:
+        "Yes. Although headquartered in India, our campaigns reach clients across the GCC, Europe, and North America. Our digital tools eliminate geographic barriers, making remote collaboration seamless and productive.",
+    },
+    {
+      question: "What platforms do you specialize in for advertising?",
+      answer:
+        "Our expertise is concentrated on high-ROI platforms including Google Ads (Search, Display, Shopping), Meta Ads (Facebook/Instagram), and professional B2B lead generation via LinkedIn.",
+    },
+    {
+      question: "Can I select just one service, like SEO or Social Media?",
+      answer:
+        "Absolutely. Each service, including SEO, social media management, paid ads, email marketing, and content development, operates independently. Many businesses choose to begin with a single focus area, such as organic search or Instagram engagement, and expand later as they scale. Custom strategies align with your goals and budget without unnecessary bundles.",
+    },
+    {
+      question: "What platforms do you specialize in?",
+      answer:
+ (
+        <>
+         
+  <ul className="list-none space-y-3">
+  
+  <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+      Google - Search ads, Display Network, and Google My Business optimization  </li>
+      <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+      Data Analytics & subsidiary tools: Google cloud console, aws, big query , fast API, N8N, Power BI, Python </li>
+      <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+      Meta (Facebook & Instagram) - Organic and paid campaigns including Reels and Carousel Ads  </li>
+      <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+      LinkedIn - Lead generation strategies for B2B sectors </li>
+      <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+     TikTok - Performance marketing for consumer-first brands targeting younger audiences  </li>
+      <li className="flex items-start">
+    <span className="text-blue-500 mr-2 text-xl">✓</span> {/* Custom Checkmark */}
+      Shopify and WordPress - For SEO, content marketing, and e-commerce integrations Platform selection always ties back to where your target audience spends their time and how they consume content.  </li>
+</ul>
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+             </> ) },   
+          {
+      question: "Is there a minimum contract?",
+      answer:
+ (
+        <>
+          <p>
+            Yes. Our contracts start at a minimum duration of 3 months. This timeframe allows for research, implementation, 
+            and iterative optimization of your campaign. One-off services, such as website audits or single ad campaign setups, 
+            are also available without ongoing commitments. For longer-term growth programs, 6- and 12-month packages offer both consistency and strategic depth.
+          </p>    </> ) },    
+  ];
 
-    return (
-<div className={`border border-gray-200 rounded-xl transition-all duration-300 ${isOpen ? 'bg-gray-50' : 'bg-white'}`}>
-        <h2 id={`accordion-heading-${question.replace(/\s+/g, '-')}`} className="w-full">
-          <button
-            type="button"
-            className="flex items-center justify-between w-full p-4 text-left font-semibold text-lg text-gray-800 rounded-xl transition-colors duration-200 hover:bg-blue-100"
-            onClick={toggleOpen}
-            aria-expanded={isOpen}
-            aria-controls={`accordion-content-${question.replace(/\s+/g, '-')}`}
-          >
-            <span>{question}</span>
-            <svg
-              className={`w-6 h-6 text-gray-400 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-        </h2>
-        <div
-          id={`accordion-content-${question.replace(/\s+/g, '-')}`}
-          role="region"
-          aria-labelledby={`accordion-heading-${question.replace(/\s+/g, '-')}`}
-          className={`overflow-hidden transition-max-height duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}
-        >
-          <div className="p-4 pt-0 text-gray-600 leading-relaxed">
-            {answer}
+  // Split FAQs into two halves for the 2-column layout
+  const halfwayPoint = Math.ceil(faqs.length / 2);
+  const leftColumnFaqs = faqs.slice(0, halfwayPoint);
+  const rightColumnFaqs = faqs.slice(halfwayPoint);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 py-16 px-4 sm:px-8 lg:px-12 ">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-16 pt-8">
+          <span className="text-sm font-semibold text-blue-600 bg-blue-100 px-4 py-1 rounded-full uppercase tracking-widest shadow-inner">
+            Support Center
+          </span>
+          <h1 className="mt-4 text-5xl sm:text-6xl font-extrabold text-gray-900 tracking-tight">
+            Common Questions
+          </h1>
+          <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+            Find quick, comprehensive answers to the most frequently asked questions about our digital marketing strategies and pricing models.
+          </p>
+        </div>
+
+        {/* 2-Column FAQ Grid */}
+        <div className="grid lg:grid-cols-2 gap-x-10 gap-y-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {leftColumnFaqs.map((faq, index) => (
+              <AccordionItem key={index} question={faq.question} answer={faq.answer} />
+            ))}
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {rightColumnFaqs.map((faq, index) => (
+              <AccordionItem key={index + halfwayPoint} question={faq.question} answer={faq.answer} />
+            ))}
           </div>
         </div>
       </div>
-    );
-  };
+      
+      
+    </div>
+  );
+};
 
-  export default App;
+export default App;

@@ -9,8 +9,8 @@ export default function Logos() {
   { name: 'Facebook', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg' },
   { name: 'Wordpress', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/wordpress.svg' },
   { name: 'Semrush', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/semrush.svg' },
-  { name: 'Bitrix24', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/bitrix24.svg' },
-  { name: 'Frappe', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/frappe.svg' },
+  { name: 'Bitrix24', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/zoho.svg' },
+  { name: 'Frappe', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/yoast.svg' },
   { name: 'Github', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg' },
 ];
   const allLogos = [...logos, ...logos, ...logos]; // Duplicated multiple times for longer seamless loop
@@ -18,15 +18,14 @@ export default function Logos() {
   return (
     <section className="bg-white py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h3 className="mb-6 text-center text-1xl font-semibold text-blue-500">
-          Trusted by Companies all over the world
-        </h3>
+       
         <div className="relative overflow-x-hidden">
           <div className="inline-flex animate-slide-right whitespace-nowrap">
             {allLogos.map((logo, index) => (
               <div
                 key={index}
-                className="mx-4 flex h-16 w-32 shrink-0 items-center justify-center rounded-lg bg-zinc-100 p-2 sm:w-40 lg:w-48" // Adjusted size for images
+                className="mx-4 flex h-16 w-32 shrink-0 items-center justify-center rounded-lg bg-zinc-10 p-2 sm:w-40 lg:w-48" // Adjusted size for images
+               
               >
                 <Image
                   src={logo.src}

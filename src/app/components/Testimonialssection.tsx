@@ -6,10 +6,10 @@ import Image from 'next/image';
 
 const testimonials = [
  {
-  "name": "Sarah Chen",
-  "role": "Marketing Director",
-  "company": "TechFlow Inc.",
-  "avatar": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face",
+  "name": "Bibin Basil",
+  "role": "Marketing Manager",
+  "company": "Best Solution ",
+  "avatar": "/Bibin_basil.webp",
   "content": "Grovoz has completely elevated our digital marketing strategy. Their team's expertise in SEO and content creation, especially Ashwini, led to a significant increase in our website traffic and conversions. They are professional, proactive, and truly invested in our success.",
   "rating": 5
 },
@@ -52,7 +52,7 @@ export default function TestimonialsSection() {
         ></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-7xl mx-auto px-6 ">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -61,6 +61,13 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
+                    <div className="mb-4">
+
+            <span
+          className="text-sm font-semibold text-white bg-gradient-to-r from purple-400 to-purple-400 px-4 py-1 rounded-full uppercase tracking-widest shadow-inner"
+        >
+Grovoz Testimonials        </span>
+</div>
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Loved by professionals
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">

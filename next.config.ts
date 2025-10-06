@@ -11,13 +11,13 @@ const nextConfig = {
         hostname: 'placehold.co',
       },
       {
-      protocol: 'https',
+        protocol: 'https',
         hostname: 'images.unsplash.com',
         port: '',
         pathname: '/**',
       }
     ],
-  },
+  }
 };
 
 module.exports = nextConfig;

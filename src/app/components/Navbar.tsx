@@ -6,36 +6,22 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// Define animation variants for the mobile menu
+
 const menuVariants = {
-  hidden: {
-    height: 0,
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-    },
-  },
-  visible: {
-    height: "auto",
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-    },
-  },
+  hidden: { height: 0, opacity: 0, transition: { duration: 0.3 } },
+  visible: { height: "auto", opacity: 1, transition: { duration: 0.3 } },
 };
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
-  // scroll-based rotation
   const { scrollYProgress } = useScroll();
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   return (
-<header className="sticky top-0 z-[100] bg-white/70 backdrop-blur border-b border-black/5">
+    <header className="sticky top-0 z-[100] bg-white/70 backdrop-blur border-b border-black/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2">
-          {/* Rotating logo */}
           <motion.div style={{ rotate }}>
             <Image
               src="/GVZ-LOGO_header.png"
@@ -47,39 +33,56 @@ export default function Navbar() {
           </motion.div>
         </Link>
 
-       <nav className="hidden md:flex items-center gap-8 text-sm">
-  <Link href="/#services" className="hover:text-brand-600" onClick={() => setOpen(false)}>
-    Services
-  </Link>
-  <Link href="/#process" className="hover:text-brand-600" onClick={() => setOpen(false)}>
-    Process
-  </Link>
-  <Link href="/#whyus" className="hover:text-brand-600" onClick={() => setOpen(false)}>
-    Why Choose Us
-  </Link>
-  <Link href="/#contact" className="hover:text-brand-600" onClick={() => setOpen(false)}>
-    Contact Us
-  </Link>
-</nav>
+        {/* Right: Nav + Button */}
+        <div className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-8 text-sm font-medium">
+            {[
+              { href: "/services", label: "Services" },
+              { href: "/contact", label: "Contact Us" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="relative group"
+              >
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-blue-600">
+                  {item.label}
+                </span>
+                {/* underline animation */}
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
+          </nav>
 
-{/* Desktop buttons should also have this behavior */}
-<div className="hidden md:flex items-center gap-3">
-  <Link
-    href="/#contact"
-    className="px-4 py-2 text-sm rounded-xl hover:bg-zinc-100"
-    onClick={() => setOpen(false)}
-  >
-    Contact
-  </Link>
-  <Link
-    href="/#demo"
-    className="px-4 py-2 text-sm rounded-xl bg-blue-600 text-white hover:bg-brand-700"
-    onClick={() => setOpen(false)}
-  >
-    Book a demo
-  </Link>
-</div>
-
+          {/* Gradient CTA Button with Pulse */}
+          <motion.div
+            animate={{
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 0 0px rgba(37, 99, 235, 0.0)",
+                "0 0 20px rgba(37, 99, 235, 0.4)",
+                "0 0 0px rgba(37, 99, 235, 0.0)",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Link
+              href="/#demo"
+              className="relative px-5 py-2 text-sm rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md 
+                         transition-all duration-300 transform hover:scale-110 hover:shadow-blue-500/50"
+              onClick={() => setOpen(false)}
+            >
+              <span className="relative z-10">Book a demo</span>
+              {/* gradient overlay for subtle shift on hover */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 hover:opacity-100 transition-opacity duration-500"></span>
+            </Link>
+          </motion.div>
+        </div>
 
         {/* Mobile toggle */}
         <button
@@ -91,33 +94,46 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile dropdown with animation */}
+      {/* Mobile dropdown */}
       <motion.div
         className="md:hidden border-t border-black/5 px-4 py-3 space-y-2 overflow-hidden flex flex-col items-center"
         variants={menuVariants}
         initial="hidden"
         animate={open ? "visible" : "hidden"}
       >
-        <a href="#Services" className="block">
+        <Link href="/services" className="block hover:text-blue-600">
           Services
-        </a>
-        <a href="#process" className="block">
-          Process
-        </a>
-        <a href="#whyus" className="block">
-              Why Choose Us
+        </Link>
+        <Link href="/contact" className="block hover:text-blue-600">
+          Contact
+        </Link>
 
-        </a>
-        <a href="#Contact" className="block">
-          Contact
-        </a>
-        {/* Mobile Contact and Demo buttons */}
-        <Link href="#contact" className="block px-4 py-2 text-sm rounded-xl bg-grey-600 hover:bg-zinc-100">
-          Contact
-        </Link>
-        <Link href="#demo" className="block px-4 py-2 text-sm rounded-xl bg-blue-600 text-white hover:bg-brand-700">
-          Book a demo
-        </Link>
+        {/* Mobile CTA with Pulse */}
+        <motion.div
+          animate={{
+            scale: [1, 1.05, 1],
+            boxShadow: [
+              "0 0 0px rgba(37, 99, 235, 0.0)",
+              "0 0 20px rgba(37, 99, 235, 0.4)",
+              "0 0 0px rgba(37, 99, 235, 0.0)",
+            ],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="w-full max-w-xs"
+        >
+          <Link
+            href="#demo"
+            className="relative block w-full px-4 py-2 text-sm rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md 
+                       hover:scale-110 hover:shadow-blue-500/50 transition-all duration-300 text-center"
+          >
+            <span className="relative z-10">Book a demo</span>
+            <span className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 hover:opacity-100 transition-opacity duration-500"></span>
+          </Link>
+        </motion.div>
       </motion.div>
     </header>
   );
