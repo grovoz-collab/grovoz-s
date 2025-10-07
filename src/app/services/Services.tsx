@@ -1,24 +1,60 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { 
     Search, Users, Target, Mail, FileText, MonitorSmartphone, TrendingUp, ShieldCheck, LineChart,
     HeartHandshake, Building, Briefcase, 
     Stethoscope, ShoppingCart, Factory, Database, Milestone, Layers, BrainCircuit, Lock, Award,
-    ChevronDown, Users2, BarChart2, CloudCog, Shield, X
+    ChevronDown, Users2, BarChart2, CloudCog, Shield, X, LucideProps
 } from 'lucide-react';
+import { ForwardRefExoticComponent, RefAttributes } from 'react'; // Make sure these are imported for the icon type
 
+// Define the interface for the details array items
+interface ServiceDetail {
+    title: string;
+    text: string;
+}
+type WhyGrovozTabKey = keyof typeof whyGrovozTabs;
 
+// Define the complete interface for a Service item
+interface ServiceItem {
+    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+    title: string;
+    question: string;
+    description: string;
+    buttons: string[];
+    // ✅ ADD THE OPTIONAL DETAILS PROPERTY
+    details?: ServiceDetail[]; 
+}
+interface AccordionItemProps {
+    question: string;
+    answer: string;
+    isOpen: boolean;
+    onToggle: () => void;
+}
+interface FormPopupProps {
+    isVisible: boolean;
+    onClose: () => void;
+    heading: string;
+}
 // Animation variants for sections
-const fadeInUp = {
-    initial: { opacity: 0, y: 40 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: "easeOut" }
+const fadeInUp: Variants = {
+    initial: { 
+        opacity: 0, 
+        y: 40 
+    },
+    whileInView: { 
+        opacity: 1, 
+        y: 0,
+        transition: { 
+            duration: 0.8, 
+            ease: "easeOut" 
+        }
+    },
 };
 
 // Data for the interactive services section (Unchanged)
-const services = [
+const services: ServiceItem[] = [
     { 
         icon: Search, 
         title: "SEO & GEO Services", 
@@ -142,7 +178,7 @@ const methodologySteps = [
 ];
 
 // Reusable Accordion Item component (Unchanged)
-const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
+const AccordionItem = ({ question, answer, isOpen, onToggle }: AccordionItemProps) => (
     <div className="border-b border-slate-200">
         <button
             onClick={onToggle}
@@ -174,11 +210,10 @@ const AccordionItem = ({ question, answer, isOpen, onToggle }) => (
     </div>
 );
 
-
 // ==========================================================
 // CORRECTED: Form Popup Component with full submission logic
 // ==========================================================
-const FormPopup = ({ isVisible, onClose, heading }) => {
+const FormPopup = ({ isVisible, onClose, heading }: FormPopupProps) => {
     // 1. State for form fields
     const [formData, setFormData] = useState({
         name: '',
@@ -189,10 +224,10 @@ const FormPopup = ({ isVisible, onClose, heading }) => {
         service: heading, // Initialized with the service name
     });
     
-    // 2. State for submission status
+    // 2. State for submission status (Set error type to string | null)
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null); // ✅ CORRECTED TYPE
 
     // Reset service on heading change (for seamless switching between service buttons)
     useEffect(() => {
@@ -203,12 +238,12 @@ const FormPopup = ({ isVisible, onClose, heading }) => {
 
 
     // Update form data on change
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
     
     // Handle form submission and API call
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
@@ -241,10 +276,16 @@ const FormPopup = ({ isVisible, onClose, heading }) => {
             } else {
                 // Handle non-200 responses (e.g., API validation errors)
                 const errorData = await response.json();
-                setError(errorData.error || 'Failed to submit form. Check required fields.');
-            }
+                
+                // ✅ FIX 1: Use Type Assertion to access .error property
+                const errorString = (errorData as { error?: string }).error; 
+                
+                // ✅ FIX 2: Use the existing setError from the component state
+                setError(errorString || 'Failed to submit form. Check required fields.');
+            }            
         } catch (err) {
-            // Handle network errors
+            console.error('API call failed:', err); 
+            // Type assertion for 'err' might be needed if you get an error here
             setError('A network error occurred. Please check your connection.');
         } finally {
             setLoading(false);
@@ -332,7 +373,7 @@ const FormPopup = ({ isVisible, onClose, heading }) => {
                                 
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-semibold text-slate-800 mb-1">Project Details</label>
-                                    <textarea id="message" rows="4" required value={formData.message} onChange={handleChange} className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder={`I need help with ${heading.toLowerCase()}...`}></textarea>
+                                   <textarea id="message" rows={4} required value={formData.message} onChange={handleChange} className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition" placeholder={`I need help with ${heading.toLowerCase()}...`}></textarea>
                                 </div>
                                 
                                 {/* Display Error Message */}
@@ -358,24 +399,24 @@ const FormPopup = ({ isVisible, onClose, heading }) => {
 };
 // Main component for the landing page
 export default function GrovozMarketingPage() {
-    const [activeTab, setActiveTab] = useState('expertise');
-    const [openFaq, setOpenFaq] = useState(0);
+    const [activeTab, setActiveTab] = useState<WhyGrovozTabKey>('expertise');
+    const [openFaq, setOpenFaq] = useState<number | null>(0); 
     const [activeService, setActiveService] = useState(0);
-    const timerRef = useRef(null);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     // State for the popup
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalHeading, setModalHeading] = useState("");
 
     // Function to open the modal
-    const openModal = (heading) => {
-        setIsModalOpen(true);
-        setModalHeading(heading);
-        // Pause auto-cycle when modal is open
-        if (timerRef.current) {
-            clearInterval(timerRef.current);
-        }
-    };
+   const openModal = (heading: string) => {
+    setIsModalOpen(true);
+    setModalHeading(heading);
+    // Pause auto-cycle when modal is open
+    if (timerRef.current) {
+        clearInterval(timerRef.current);
+    }
+};
 
     // Function to close the modal
     const closeModal = () => {
@@ -386,10 +427,11 @@ export default function GrovozMarketingPage() {
     };
     
     // Auto-cycle logic (modified to be a callable function)
-    const startTimer = () => {
-        timerRef.current = setInterval(() => {
+     const startTimer = () => {
+        // The assignment now correctly matches the ref type
+        timerRef.current = setInterval(() => { 
             setActiveService(prevIndex => (prevIndex + 1) % services.length);
-        }, 3000); // Change service every 3 seconds
+        }, 3000) ; // Add a cast to number to ensure compatibility
     };
 
     useEffect(() => {
@@ -403,7 +445,7 @@ export default function GrovozMarketingPage() {
         };
     }, []);
 
-    const handleServiceClick = (index) => {
+    const handleServiceClick = (index: number) => { 
         // Clear the timer and set the active service
         if (timerRef.current) {
             clearInterval(timerRef.current);
@@ -430,7 +472,7 @@ export default function GrovozMarketingPage() {
                             {/* Left Sidebar */}
                             <div 
                                 className="p-12 border-r border-white/10"
-                                onMouseEnter={() => clearInterval(timerRef.current)}
+                                            onMouseEnter={() => timerRef.current && clearInterval(timerRef.current)}
                                 onMouseLeave={startTimer}
                             >
                                 <h2 className="text-3xl font-bold text-white mb-8 tracking-wider">Grovoz Services</h2>
@@ -538,12 +580,16 @@ export default function GrovozMarketingPage() {
             {/* Why Grovoz Tabs Section (Unchanged) */}
             <section className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
-                    <motion.div {...fadeInUp} className="text-center mb-16">
+                        <motion.div // ✅ ADD the viewport prop here:
+                            {...fadeInUp} 
+                            viewport={{ once: true }} 
+                            className="text-center mb-16"
+                        >
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The Grovoz Expert Advantage</h2>
                         <p className="text-xl text-slate-600 max-w-3xl mx-auto">Discover why industry leaders trust us to deliver results.</p>
                     </motion.div>
                     <div className="flex flex-wrap justify-center mb-10 gap-2 md:gap-4 p-2 bg-slate-100 rounded-full">
-                        {Object.keys(whyGrovozTabs).map(key => {
+                          { (Object.keys(whyGrovozTabs) as (keyof typeof whyGrovozTabs)[]).map(key => {
                             const tab = whyGrovozTabs[key];
                             return (
                                 <button 

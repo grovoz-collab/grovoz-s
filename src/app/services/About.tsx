@@ -8,7 +8,7 @@ export default function About() {
   const [projects, setProjects] = useState(0);
   const [experience, setExperience] = useState(0);
   const [team, setTeam] = useState(0);
-  const [support, setSupport] = useState(24);
+const support = 24;
   const sectionRef = useRef(null);
 
    
@@ -22,47 +22,54 @@ export default function About() {
     { month: 'Jun', growth: 1200 },
   ];
 
-  useEffect(() => {
+useEffect(() => {
+    const currentRef = sectionRef.current; // Capture the ref value
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const animateNumber = (setter, target, duration) => {
-              let start = null;
-              const step = (timestamp) => {
-                if (!start) start = timestamp;
-                const progress = timestamp - start;
-                const value = Math.min(progress / duration, 1) * target;
-                setter(Math.floor(value));
-                if (progress < duration) {
-                  window.requestAnimationFrame(step);
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // FIX: Explicitly type the parameters of animateNumber
+                    const animateNumber = (
+                        setter: React.Dispatch<React.SetStateAction<number>>, // Type for setProjects, setExperience, setTeam
+                        target: number,
+                        duration: number
+                    ) => {
+                        let start: number | null = null; // Also good practice to type 'start'
+                        const step = (timestamp: number) => {
+                            if (!start) start = timestamp;
+                            const progress = timestamp - start;
+                            const value = Math.min(progress / duration, 1) * target;
+                            setter(Math.floor(value));
+                            if (progress < duration) {
+                                window.requestAnimationFrame(step);
+                            }
+                        };
+                        window.requestAnimationFrame(step);
+                    };
+
+                    animateNumber(setProjects, 500, 1500);
+                    animateNumber(setExperience, 15, 1500);
+                    animateNumber(setTeam, 50, 1500);
+                    observer.unobserve(entry.target);
                 }
-              };
-              window.requestAnimationFrame(step);
-            };
-            
-            animateNumber(setProjects, 500, 1500);
-            animateNumber(setExperience, 15, 1500);
-            animateNumber(setTeam, 50, 1500);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.5,
-      }
+            });
+        },
+        {
+            threshold: 0.5,
+        }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (currentRef) {
+        observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+        if (currentRef) {        // Use captured ref, NOT sectionRef.current
+            observer.unobserve(currentRef);
+        }
     };
-  }, []);
+}, []);
 
   return (
     <section ref={sectionRef} id="about" className="py-24 bg-white">
@@ -86,7 +93,8 @@ export default function About() {
             </h2>
 
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-Grovoz specializes in customer focused, results driven digital marketing. They understand that today's consumers make purchasing decisions based on their online discoveries. While acknowledging that all businesses need professional digital marketing, Grovoz sets itself apart by avoiding generic, one-size-fits-all solutions. Instead, their expert team leverages predictable consumer data patterns to develop strategies tailored to your specific products and services, ultimately aiming to generate the sales, traffic, and profit your business deserves.            </p>
+  Grovoz specializes in customer focused, results driven digital marketing. They understand that today&apos;s consumers make purchasing decisions based on their online discoveries. While acknowledging that all businesses need professional digital marketing, Grovoz sets itself apart by avoiding generic, one-size-fits-all solutions. Instead, their expert team leverages predictable consumer data patterns to develop strategies tailored to your specific products and services, ultimately aiming to generate the sales, traffic, and profit your business deserves.
+           </p>
            
             <div className="space-y-6 mb-8">
               <div className="flex items-start gap-4">

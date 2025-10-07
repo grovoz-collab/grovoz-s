@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+// FIX: Import the Transition type from framer-motion
+import { motion, type Transition } from "framer-motion"; 
 import {
   Award,
   Shield,
@@ -8,30 +9,47 @@ import {
   BarChart3,
   Star,
   TrendingUp,
+  LucideIcon, // Import LucideIcon type
 } from "lucide-react";
-import ContactForm from "../components/ContactForm"; // <-- Import the ContactForm component here
+import ContactForm from "../components/ContactForm"; 
 
-// In a full project, you would import these from your component library.
-// For this single-file example, we create simple, functional equivalents.
-const Card = ({ children, className = "" }) => (
+// --- TYPE DEFINITIONS FOR HELPER COMPONENTS ---
+
+interface ComponentProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+// --- HELPER COMPONENTS (FIXED WITH TYPING) ---
+
+// FIX: Apply ComponentProps interface
+const Card: React.FC<ComponentProps> = ({ children, className = "" }) => (
   <div
     className={`rounded-xl border border-gray-200 bg-white text-gray-900 shadow ${className}`}
   >
     {children}
   </div>
 );
-const CardHeader = ({ children, className = "" }) => (
+
+// FIX: Apply ComponentProps interface
+const CardHeader: React.FC<ComponentProps> = ({ children, className = "" }) => (
   <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>{children}</div>
 );
-const CardTitle = ({ children, className = "" }) => (
+
+// FIX: Apply ComponentProps interface
+const CardTitle: React.FC<ComponentProps> = ({ children, className = "" }) => (
   <h3 className={`font-semibold leading-none tracking-tight ${className}`}>
     {children}
   </h3>
 );
-const CardContent = ({ children, className = "" }) => (
+
+// FIX: Apply ComponentProps interface
+const CardContent: React.FC<ComponentProps> = ({ children, className = "" }) => (
   <div className={`p-6 pt-0 ${className}`}>{children}</div>
 );
-const Badge = ({ children, className = "" }) => (
+
+// FIX: Apply ComponentProps interface
+const Badge: React.FC<ComponentProps> = ({ children, className = "" }) => (
   <div
     className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${className}`}
   >
@@ -39,7 +57,18 @@ const Badge = ({ children, className = "" }) => (
   </div>
 );
 
-const advantages = [
+// --- ADVANTAGE DATA ---
+
+// Define a type for the advantage objects for clarity
+interface Advantage {
+    icon: LucideIcon;
+    title: string;
+    description: string;
+    stats: string;
+    color: string;
+}
+
+const advantages: Advantage[] = [
   {
     icon: Award,
     title: "Certified Specialists",
@@ -90,6 +119,8 @@ const advantages = [
   },
 ];
 
+// --- MAIN COMPONENT ---
+
 function WhyChooseSection() {
   // New state to manage the contact form's visibility
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -108,6 +139,7 @@ function WhyChooseSection() {
           fill="none"
           viewBox="0 0 100 100"
         >
+          {/* FIX: Use the imported Transition type to satisfy the linter */}
           <motion.path
             stroke="#1d4ed8"
             strokeWidth="0.5"
@@ -115,7 +147,7 @@ function WhyChooseSection() {
             initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: false }}
-            transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
+            transition={{ duration: 3, ease: "easeInOut", repeat: Infinity } as Transition} // Linter Fix applied here
           />
         </motion.svg>
       </div>

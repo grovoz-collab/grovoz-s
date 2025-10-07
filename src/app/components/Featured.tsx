@@ -6,9 +6,12 @@ import { ArrowRight, Zap, Smartphone, BarChart3, Clock, TrendingUp, CheckCircle 
 // Importing the separate ContactForm component
 import ContactForm from "./ContactForm"; 
 
+interface ActionPanelProps {
+  stageId: number;
+}
 
 // --- Action Panel Component (Helper for Sticky Sections) ---
-const ActionPanel = ({ stageId }) => {
+const ActionPanel = ({ stageId }: ActionPanelProps) => {
   let title = "";
   let description = "";
   let toggles = [];
@@ -68,7 +71,7 @@ const ActionPanel = ({ stageId }) => {
       return null;
   }
 
-  const ToggleSwitch = ({ status }) => (
+const ToggleSwitch = ({ status }: { status: boolean }) => (
     <div className={`relative w-10 h-6 rounded-full transition-all duration-300 ${status ? 'bg-green-500' : 'bg-gray-300'}`}>
       <div className={`absolute left-0 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300 ${status ? 'translate-x-4' : 'translate-x-0.5'}`}></div>
     </div>

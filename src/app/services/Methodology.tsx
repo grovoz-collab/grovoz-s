@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   Search,
@@ -9,6 +9,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 
+// --- STATIC DATA ---
 const methodologyPhases = [
   {
     phaseNumber: 1,
@@ -106,12 +107,112 @@ const methodologyPhases = [
   },
 ];
 
+// --- HELPER COMPONENT (Fixes the Hook Errors) ---
+interface PhaseItemProps {
+  phase: typeof methodologyPhases[0];
+  index: number;
+  isOpen: boolean;
+  togglePhase: (phaseNumber: number) => void;
+  getCardClasses: (phaseNumber: number) => string;
+}
+
+const MethodologyPhaseItem: React.FC<PhaseItemProps> = ({
+  phase,
+  index,
+  isOpen,
+  togglePhase,
+  getCardClasses,
+}) => {
+  // HOOKS MUST BE CALLED HERE, INSIDE THE COMPONENT
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { margin: "-20% 0px -20% 0px" });
+
+  // When the item scrolls out of view AND it's open, it will auto-collapse
+  // We use a passed function for setOpenPhase to avoid passing it directly
+  const { phaseNumber } = phase;
+
+  useEffect(() => {
+    // This hook is now correctly called inside the functional component.
+    if (!inView && isOpen) {
+      // We call the passed toggle function to close it (if currently open)
+      togglePhase(phaseNumber);
+    }
+  }, [inView, isOpen, phaseNumber, togglePhase]);
+
+  const cardClasses = getCardClasses(phaseNumber);
+
+  return (
+    <div
+      key={index}
+      ref={ref}
+      className={`relative rounded-2xl shadow-lg overflow-visible transition-all duration-300 ${cardClasses}`}
+    >
+      {/* Header */}
+      <button
+        className="w-full flex items-center justify-between p-6 lg:p-8 cursor-pointer transition-colors"
+        onClick={() => togglePhase(phaseNumber)}
+      >
+        <div className="flex items-center gap-6">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-xl font-bold">
+            {phase.phaseNumber}
+          </div>
+          <div className="text-left">
+            <h3 className="text-2xl font-bold text-slate-900">{phase.title}</h3>
+            <p className="text-lg text-slate-600">{phase.subtitle}</p>
+          </div>
+        </div>
+        <ChevronDown
+          className={`w-8 h-8 text-slate-500 transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {/* Expanded Panel */}
+      <motion.div
+        initial={{ maxHeight: 0, opacity: 0 }}
+        animate={
+          isOpen
+            ? { maxHeight: "1000px", opacity: 1 }
+            : { maxHeight: 0, opacity: 0 }
+        }
+        transition={{ duration: 0.4 }}
+        className="overflow-hidden bg-white rounded-b-2xl border-t border-gray-200"
+      >
+        <div className="p-6 lg:p-8">
+          <div className="space-y-8">
+            {phase.topics.map((topic, topicIndex) => (
+              <div key={topicIndex}>
+                <h4 className="text-xl font-semibold text-slate-800 mb-4">
+                  {topic.heading}
+                </h4>
+                <ul className="space-y-3 text-slate-600">
+                  {topic.points.map((point, pointIndex) => (
+                    <li key={pointIndex} className="flex items-start">
+                      <span className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3"></span>
+                      <span className="flex-1">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+// --- MAIN COMPONENT ---
 export default function Methodology() {
   const [openPhase, setOpenPhase] = useState<number | null>(1);
 
-  const togglePhase = (phaseNumber: number) => {
-    setOpenPhase(openPhase === phaseNumber ? null : phaseNumber);
-  };
+  // Memoize togglePhase to ensure stability for the useEffect dependency array
+  const togglePhase = useCallback((phaseNumber: number) => {
+    setOpenPhase((currentOpenPhase) =>
+      currentOpenPhase === phaseNumber ? null : phaseNumber
+    );
+  }, []); // Empty dependency array means it's created once
 
   const getCardClasses = (phaseNumber: number) => {
     switch (phaseNumber) {
@@ -182,209 +283,136 @@ export default function Methodology() {
           </p>
         </motion.div>
 
-        {/* Phases */}
+        {/* Phases (Now using the dedicated component) */}
         <div className="space-y-6 relative">
-          {methodologyPhases.map((phase, index) => {
-            const isOpen = openPhase === phase.phaseNumber;
-            const cardClasses = getCardClasses(phase.phaseNumber);
-
-            // Ref for scroll detection
-            const ref = useRef<HTMLDivElement | null>(null);
-            const inView = useInView(ref, { margin: "-20% 0px -20% 0px" });
-
-            // Auto-collapse if not in view
-            useEffect(() => {
-              if (!inView && isOpen) {
-                setOpenPhase(null);
-              }
-            }, [inView, isOpen]);
-
-            return (
-              <div
-                key={index}
-                ref={ref}
-                className={`relative rounded-2xl shadow-lg overflow-visible transition-all duration-300 ${cardClasses}`}
-              >
-                {/* Header */}
-                <button
-                  className="w-full flex items-center justify-between p-6 lg:p-8 cursor-pointer transition-colors"
-                  onClick={() => togglePhase(phase.phaseNumber)}
-                >
-                  <div className="flex items-center gap-6">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-xl font-bold">
-                      {phase.phaseNumber}
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-2xl font-bold text-slate-900">
-                        {phase.title}
-                      </h3>
-                      <p className="text-lg text-slate-600">{phase.subtitle}</p>
-                    </div>
-                  </div>
-                  <ChevronDown
-                    className={`w-8 h-8 text-slate-500 transition-transform duration-300 ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                {/* Expanded Panel */}
-                <motion.div
-                  initial={{ maxHeight: 0, opacity: 0 }}
-                  animate={
-                    isOpen
-                      ? { maxHeight: "1000px", opacity: 1 }
-                      : { maxHeight: 0, opacity: 0 }
-                  }
-                  transition={{ duration: 0.4 }}
-                  className="overflow-hidden bg-white rounded-b-2xl border-t border-gray-200"
-                >
-                  <div className="p-6 lg:p-8">
-                    <div className="space-y-8">
-                      {phase.topics.map((topic, topicIndex) => (
-                        <div key={topicIndex}>
-                          <h4 className="text-xl font-semibold text-slate-800 mb-4">
-                            {topic.heading}
-                          </h4>
-                          <ul className="space-y-3 text-slate-600">
-                            {topic.points.map((point, pointIndex) => (
-                              <li key={pointIndex} className="flex items-start">
-                                <span className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3"></span>
-                                <span className="flex-1">{point}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            );
-          })}
+          {methodologyPhases.map((phase, index) => (
+            <MethodologyPhaseItem
+              key={phase.phaseNumber}
+              phase={phase}
+              index={index}
+              isOpen={openPhase === phase.phaseNumber}
+              togglePhase={togglePhase}
+              getCardClasses={getCardClasses}
+            />
+          ))}
         </div>
       </div>
-        
-        {/* New Future-Ready Marketing Section */}
-        <section className="mt-24 py-24 bg-gradient-to-br from-blue-900 to-slate-950 relative">
-          <div className="absolute inset-0 z-0 opacity-10">
-<motion.svg
-  className="w-full h-full"
-  xmlns="http://www.w3.org/2000/svg"
-  fill="none"
-  viewBox="0 0 100 100"
->
-  {/* Cross lines */}
-  <motion.path
-    stroke="#fff"
-    strokeWidth="0.5"
-    d="M0 50h100M50 0v100"
-    initial={{ pathLength: 0 }}
-    whileInView={{ pathLength: 1 }}
-    viewport={{ once: false }}
-    transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
-  />
 
-  {/* Circle */}
-  <motion.circle
-    cx="50"
-    cy="50"
-    r="40"
-    stroke="#f70bd0ff"
-    strokeWidth="0.5"
-    initial={{ pathLength: 0 }}
-    whileInView={{ pathLength: 1 }}
-    viewport={{ once: false }}
-    transition={{
-      duration: 1.5,
-      delay: 0.5,
-      ease: "easeInOut",
-      repeat: Infinity,
-    }}
-  />
+      {/* New Future-Ready Marketing Section */}
+      <section className="mt-24 py-24 bg-gradient-to-br from-blue-900 to-slate-950 relative">
+        <div className="absolute inset-0 z-0 opacity-10">
+          <motion.svg
+            className="w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 100 100"
+          >
+            {/* Cross lines */}
+            <motion.path
+              stroke="#fff"
+              strokeWidth="0.5"
+              d="M0 50h100M50 0v100"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
+            />
 
-  {/* Square */}
-  <motion.rect
-    x="10"
-    y="10"
-    width="80"
-    height="80"
-    rx="10"
-    stroke="#fff"
-    strokeWidth="0.5"
-    initial={{ pathLength: 0 }}
-    whileInView={{ pathLength: 1 }}
-    viewport={{ once: false }}
-    transition={{
-      duration: 1.5,
-      delay: 1,
-      ease: "easeInOut",
-      repeat: Infinity,
-    }}
-  />
+            {/* Circle */}
+            <motion.circle
+              cx="50"
+              cy="50"
+              r="40"
+              stroke="#f70bd0ff"
+              strokeWidth="0.5"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                duration: 1.5,
+                delay: 0.5,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            />
 
-  {/* Infinity Symbol */}
-{/* Infinity Symbol */}
-<motion.path
-  d="M20 50C20 35 40 35 50 50C60 65 80 65 80 50C80 35 60 35 50 50C40 65 20 65 20 50Z"
-  stroke="#ffffffff"       // brighter cyan
-  strokeWidth="4"        // thicker line
-  fill="none"
-  initial={{ pathLength: 0 }}
-  whileInView={{ pathLength: 1 }}
-  viewport={{ once: false }}
-  transition={{
-    duration: 2,
-    delay: 1.2,
-    ease: "easeInOut",
-    repeat: Infinity,
-  }}
-/>
+            {/* Square */}
+            <motion.rect
+              x="10"
+              y="10"
+              width="80"
+              height="80"
+              rx="10"
+              stroke="#fff"
+              strokeWidth="0.5"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                duration: 1.5,
+                delay: 1,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            />
 
-</motion.svg>
-          </div>
-          
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="p-8 md:p-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg relative overflow-hidden transform-gpu transition-all duration-300 group"
-            >
-              <div className="flex flex-col items-center gap-8">
-                <div className="flex-shrink-0">
-     <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-pink-500 text-white text-lg font-mono transition-transform duration-300 group-hover:rotate-12 [clip-path:polygon(50%_0%,_0%_100%,_100%_100%)] flex items-center justify-center pt-2">
-  {"</>"}
-</div>
+            {/* Infinity Symbol */}
+            <motion.path
+              d="M20 50C20 35 40 35 50 50C60 65 80 65 80 50C80 35 60 35 50 50C40 65 20 65 20 50Z"
+              stroke="#ffffffff" // brighter cyan
+              strokeWidth="4" // thicker line
+              fill="none"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: false }}
+              transition={{
+                duration: 2,
+                delay: 1.2,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            />
+          </motion.svg>
+        </div>
 
-
-
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.05, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="p-8 md:p-12 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-lg relative overflow-hidden transform-gpu transition-all duration-300 group"
+          >
+            <div className="flex flex-col items-center gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-14 h-14 bg-gradient-to-r from-blue-500 to-pink-500 text-white text-lg font-mono transition-transform duration-300 group-hover:rotate-12 [clip-path:polygon(50%_0%,_0%_100%,_100%_100%)] flex items-center justify-center pt-2">
+                  {"</>"}
                 </div>
-                <div>
-              <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
-                    Future-Ready Marketing: Web3 and the Metaverse
-                  </h3>
-                  <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-                    Stay ahead of the curve with our forward-thinking strategies.
-                    Grovoz is exploring the new frontier of digital interaction, helping clients
-                    prepare for opportunities in the Metaverse and Web3. We develop strategies for
-                    brand presence on virtual platforms, ensuring you're ready for the next
-                    evolution of the Internet.
-                  </p>
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-6 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl"
-                >
-                  Learn More About Web3
-                </motion.button>
               </div>
-            </motion.div>
-          </div>
-        </section>
+              <div>
+                <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+                  Future-Ready Marketing: Web3 and the Metaverse
+                </h3>
+                <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+                  Stay ahead of the curve with our forward-thinking strategies.
+                  Grovoz is exploring the new frontier of digital interaction, helping clients
+                  prepare for opportunities in the Metaverse and Web3. We develop strategies for
+                  brand presence on virtual platforms, ensuring you&apos;re ready for the next
+                  evolution of the Internet.
+                </p>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-6 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl"
+              >
+                Learn More About Web3
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </section>
   );
 }

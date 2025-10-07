@@ -1,11 +1,44 @@
-    "use client";
-    import { ArrowRight, Monitor, Zap, CheckCircle, Smartphone, BarChart3, Clock, TrendingUp } from "lucide-react";
+"use client";
+import React from 'react'; // Import React for component typing
+import { ArrowRight, Monitor, Zap, CheckCircle, Smartphone, BarChart3, Clock, TrendingUp, LucideIcon } from "lucide-react";
 
-    // Helper component for the Action Panel (Right Side)
-    const ActionPanel = ({ stageId }) => {
+// --- TYPE DEFINITIONS ---
+
+// 1. Define the type for a single toggle object
+interface ToggleItem {
+    label: string;
+    status: boolean;
+    icon: LucideIcon; // Use LucideIcon type for the icon component
+}
+
+// 2. Define the props for the ActionPanel component
+interface ActionPanelProps {
+    stageId: number; // FIX: Explicitly type stageId as a number
+}
+
+// 3. Define the props for the ToggleSwitch component
+interface ToggleSwitchProps {
+    status: boolean;
+}
+
+
+// --- HELPER COMPONENTS ---
+
+// Helper function for rendering the toggle switch
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ status }) => (
+    <div className={`relative w-10 h-6 rounded-full transition-all duration-300 ${status ? 'bg-green-500' : 'bg-gray-300'}`}>
+        {/* FIX: Changed class to className */}
+        <div className={`absolute left-0 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300 ${status ? 'translate-x-4' : 'translate-x-0.5'}`}></div>
+    </div>
+);
+
+// Helper component for the Action Panel (Right Side)
+// FIX: Apply the ActionPanelProps interface to the component
+const ActionPanel: React.FC<ActionPanelProps> = ({ stageId }) => {
     let title = "";
     let description = "";
-    let toggles = [];
+    // FIX: Explicitly type toggles as an array of ToggleItem
+    let toggles: ToggleItem[] = [];
 
     // Define content for each stage's action panel
     switch (stageId) {
@@ -60,15 +93,8 @@
         ];
         break;
         default:
-        return null;
+        // No default return needed as toggles is empty and it will render empty content
     }
-
-    // Helper function for rendering the toggle switch
-    const ToggleSwitch = ({ status }) => (
-        <div className={`relative w-10 h-6 rounded-full transition-all duration-300 ${status ? 'bg-green-500' : 'bg-gray-300'}`}>
-        <div class={`absolute left-0 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-300 ${status ? 'translate-x-4' : 'translate-x-0.5'}`}></div>
-        </div>
-    );
 
     return (
         <div className="p-6 h-full bg-indigo-50/60 rounded-2xl shadow-inner border border-indigo-100">
@@ -94,17 +120,18 @@
         </div>
         </div>
     );
-    };
+};
 
 
-    export default function StickySections() { 
+// --- MAIN COMPONENT ---
+
+export default function StickySections() { 
     const cardData = [
         {
         id: 1,
         title: '1. Discovery & Requirements Analysis',
         description: 'Comprehensive consultation to understand your business goals, target audience, budget realities, and growth expectations. Our professional team conducts in-depth market research and competitive analysis.',
         top: 'top-0',
-        // These points are now used for the structured left panel
         points: [
             'Business objective identification and goal setting',
             'Target audience profiling and psychology analysis',
@@ -143,7 +170,7 @@
         title: '4. Implementation & Execution',
         description: 'Our team of certified specialists activate each campaign component with coordination and consistency across all platforms. Real-time monitoring ensures optimal performance.',
         top: 'top-48',
-            points: [
+        points: [
             'Project management with clear timelines and deliverables',
             'Quality assurance and testing protocols',
             'Brand consistency across all channels',
@@ -168,9 +195,9 @@
 
     return (
 
-    <div className="bg-white min-h-[400vh]"> {/* Removed pb-32 */}
+    <div className="bg-white min-h-[400vh]">
     {/* Main Title Section - Occupies the initial viewport */}
-    <div id="process" className="flex flex-col items-center justify-center px-4 pt-0 pb-8"> {/* Removed pt-20 and reduced pb-16 to pb-8 */}
+    <div id="process" className="flex flex-col items-center justify-center px-4 pt-0 pb-8">
         <span className="text-xs uppercase font-semibold tracking-widest text-indigo-600">DIGITAL TRANSFORMATION PARTNER</span>
         <h2 className="text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-900 text-center mt-3">
             Grow Faster with <span className="text-indigo-600">Performance-Driven</span> Strategies
@@ -240,6 +267,6 @@
             </div>
             ))}
         </div>
-        </div>
+    </div>
     );
-    }
+}

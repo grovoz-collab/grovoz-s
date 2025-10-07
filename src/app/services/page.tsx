@@ -17,77 +17,24 @@ const fadeInUp = {
     transition: { duration: 0.8 }
 };
 
-// Reusable Accordion Item Component
-const AccordionItem = ({ question, answer, isOpen, onToggle }) => {
-    const itemVariants = {
-        open: {
-            height: "auto",
-            opacity: 1,
-            transition: {
-                height: { duration: 0.4 },
-                opacity: { duration: 0.2 }
-            }
-        },
-        closed: {
-            height: 0,
-            opacity: 0,
-            transition: {
-                height: { duration: 0.4 },
-                opacity: { duration: 0.2 }
-            }
-        }
-    };
-
-    return (
-        <div
-            className={`rounded-2xl shadow-md border border-gray-100 bg-white/70 backdrop-blur-sm transition-all duration-300 overflow-hidden ${
-                isOpen ? "ring-2 ring-blue-500/40 scale-[1.005]" : "hover:shadow-lg hover:scale-[1.005]"
-            }`}
-        >
-            <h2>
-                <button
-                    type="button"
-                    className="flex items-center justify-between w-full p-5 text-left font-semibold text-lg text-gray-800 transition-all"
-                    onClick={onToggle}
-                >
-                    <span>{question}</span>
-                    <span
-                        className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white transform transition-transform duration-300 ${
-                            isOpen ? "rotate-180" : "rotate-0"
-                        }`}
-                    >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </span>
-                </button>
-            </h2>
-            <motion.div
-                initial="closed"
-                animate={isOpen ? "open" : "closed"}
-                variants={itemVariants}
-            >
-                <div className="px-5 pb-5 text-gray-600 leading-relaxed">
-                    {answer}
-                </div>
-            </motion.div>
-        </div>
-    );
-};
 
 export default function SEOPage() {
     const { scrollYProgress } = useScroll();
     const y = useTransform(scrollYProgress, [0, 1], [0, -400]);
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-    const [particles, setParticles] = useState<any[]>([]);
+    const [] = useState<number | null>(null);
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  color: string;
+}
+const [particles, setParticles] = useState<Particle[]>([]);
 
     // New state to manage the contact form's visibility
     const [isFormOpen, setIsFormOpen] = useState(false);
 
-    const handleToggle = (index: number) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
-
+  
     // Functions to open and close the contact form
     const handleOpenForm = () => setIsFormOpen(true);
     const handleCloseForm = () => setIsFormOpen(false);
@@ -110,16 +57,21 @@ export default function SEOPage() {
         });
     };
 
-    const particleVariants = {
-        initial: { scale: 0, opacity: 1 },
-        animate: {
-            scale: [0, 1, 0.5],
-            opacity: [1, 0.8, 0],
-            y: [0, -40], // rise up
-            x: [0, Math.random() * 40 - 20], // drift
-            transition: { duration: 1.2, ease: "easeOut" }
+// Corrected Code for particleVariants (around line 100):
+const particleVariants = {
+    initial: { scale: 0, opacity: 1 },
+    animate: {
+        scale: [0, 1, 0.5],
+        opacity: [1, 0.8, 0],
+        y: [0, -40], // rise up
+        x: [0, Math.random() * 40 - 20], // drift
+        transition: { 
+            duration: 1.2, 
+            // FIX: Removed 'ease: "easeOut"' to satisfy the strict Variants type.
+            // Framer Motion will use its default easing for keyframes.
         }
-    };
+    }
+};
 
     return (
         <div className="bg-white">
@@ -185,13 +137,13 @@ export default function SEOPage() {
                     <motion.div {...fadeInUp}>
                         <div className="inline-flex items-center px-4 py-2 bg-blue-400/20 rounded-full text-blue-300 font-medium mb-6">
                             <Search className="w-5 h-5 mr-2" />
-                            Grovoz's Digital Marketing Services
+                                Grovoz&apos;s Digital Marketing Services
                         </div>
                         <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-6">
                             Transform Your Business into a Revenue <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">Generating Machine</span>.
                         </h1>
                         <p className="text-xl text-slate-200 max-w-3xl mx-auto mb-8">
-                            Partner with Grovoz's trusted experts delivering measurable results through innovative, scalable solutions designed to accelerate your sales and profit with cutting-edge digital marketing services through Omnichannel Marketing Technique.
+                            Partner with Grovoz&apos;s trusted experts delivering measurable results through innovative, scalable solutions designed to accelerate your sales and profit with cutting-edge digital marketing services through Omnichannel Marketing Technique.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             {/* This is the button that opens the contact form */}

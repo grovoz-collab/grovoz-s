@@ -1,29 +1,39 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-// Removed: import Link from "next/link"; (Replaced with standard 'a' tags)
-// Ensure all necessary icons are imported
+// FIX: Import specific types from framer-motion
+import { motion, type Variants, type Transition, type TargetAndTransition } from "framer-motion";
 import { ArrowRight, Fingerprint, Puzzle, Code, Sparkles, Zap } from "lucide-react"; 
-import ContactForm from "../components/ContactForm";
-// Removed: import Image from "next/image"; (Replaced with standard 'img' tags)
-
-// Assuming ContactForm is defined elsewhere, keeping the import for completeness
-// import ContactForm from "./ContactForm"; 
+// Assuming ContactForm is defined elsewhere
+import ContactForm from "../components/ContactForm"; 
+import Image from "next/image"; 
 
 /**
  * Utility function to handle dynamic CSS class merging.
  * @param {string[]} classes - Array of Tailwind CSS classes to merge.
  * @returns {string} - Merged class string.
  */
-const cn = (...classes) => classes.filter(Boolean).join(' ');
+const cn = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
 // --- UTILITY COMPONENTS ---
+
+// Define the types for the Button component's props
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    className?: string;
+    variant?: 'default' | 'outline' | 'primary';
+    size?: 'default' | 'sm' | 'lg' | 'icon';
+    children?: React.ReactNode;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+    href?: string;
+}
 
 /**
  * A reusable Button component with variant and size support, now using standard HTML tags.
  */
-const Button = React.forwardRef(({ className, variant, size, children, onClick, href, ...props }, ref) => {
+const Button = React.forwardRef<
+    HTMLButtonElement | HTMLAnchorElement, 
+    ButtonProps
+>(({ className, variant, size, children, onClick, href, ...props }, ref) => {
     const baseStyle = "inline-flex items-center justify-center rounded-xl font-medium transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none focus:ring-4 focus:ring-offset-2";
 
     const variants = {
@@ -41,26 +51,33 @@ const Button = React.forwardRef(({ className, variant, size, children, onClick, 
 
     const style = cn(
         baseStyle,
-        variants[variant] || variants.default,
-        sizes[size] || sizes.default,
-        className
+        variants[variant || 'default'], 
+        sizes[size || 'default'], 
+        className || '' 
     );
     
     // Use standard <a> tag for navigation if href is provided
     if (href) {
-         return (
-            <a href={href} className={style} ref={ref} {...props}>
+        return (
+            <a 
+                href={href} 
+                className={style} 
+                // FIX: Attach the onClick handler to the <a> tag to resolve the ESLint warning
+                onClick={onClick as (event: React.MouseEvent<HTMLAnchorElement>) => void} 
+                ref={ref as React.Ref<HTMLAnchorElement>} 
+                {...props as React.AnchorHTMLAttributes<HTMLAnchorElement>}
+            >
                 {children}
             </a>
-         );
+        );
     }
 
     return (
         <button
             className={style}
-            onClick={onClick}
-            ref={ref}
-            {...props}
+            onClick={onClick as (event: React.MouseEvent<HTMLButtonElement>) => void}
+            ref={ref as React.Ref<HTMLButtonElement>}
+            {...props as React.ButtonHTMLAttributes<HTMLButtonElement>}
         >
             {children}
         </button>
@@ -71,7 +88,13 @@ Button.displayName = "Button";
 /**
  * A simple Badge component for introductory text.
  */
-const Badge = ({ className, variant, children, ...props }) => {
+interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+    className?: string;
+    variant?: 'default' | 'secondary';
+    children: React.ReactNode;
+}
+
+const Badge: React.FC<BadgeProps> = ({ className, variant, children, ...props }) => {
     const baseStyle = "inline-flex items-center rounded-full text-xs font-medium px-3 py-1";
     const variants = {
         default: "bg-gray-100 text-gray-800",
@@ -80,8 +103,8 @@ const Badge = ({ className, variant, children, ...props }) => {
 
     const style = cn(
         baseStyle,
-        variants[variant] || variants.default,
-        className
+        variants[variant || 'default'],
+        className || '' 
     );
 
     return (
@@ -93,39 +116,47 @@ const Badge = ({ className, variant, children, ...props }) => {
 
 
 // --- FRAMER MOTION VARIANTS ---
-const containerVariants = {
+// FIX: Explicitly type the variants using the imported Variants type.
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
+        // FIX: Use Transition type here to avoid 'no-explicit-any'
         transition: {
             staggerChildren: 0.2,
             delayChildren: 0.1
-        }
+        } as Transition 
     }
 };
 
-const itemVariants = {
+// FIX: Explicitly type the variants using the imported Variants type.
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.8, ease: "easeOut" }
+        // FIX: Use Transition type here to avoid 'no-explicit-any'
+        transition: { duration: 0.8, ease: "easeOut" } as Transition 
     }
 };
 
-const floatingAnimation = {
+// FIX: Explicitly type the animation object using the imported TargetAndTransition type.
+const floatingAnimation: TargetAndTransition = {
     y: [-10, 10, -10],
+    // FIX: Use Transition type here to avoid 'no-explicit-any'
     transition: {
         duration: 4,
         repeat: Infinity,
         ease: "easeInOut"
-    }
+    } as Transition 
 };
 
 
 // --- TYPING TEXT ---
+const TYPING_PHRASES = ["Digital Marketing.", "SEO Optimization.", "Brand Strategy.", "Content Creation."];
+
 function TypingText() {
-    const phrases = ["Digital Marketing.", "SEO Optimization.", "Brand Strategy.", "Content Creation."];
+    const phrases = TYPING_PHRASES; 
     const [currentText, setCurrentText] = useState("");
     const [phraseIndex, setPhraseIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -135,7 +166,7 @@ function TypingText() {
 
     useEffect(() => {
         const currentPhrase = phrases[phraseIndex % phrases.length];
-        let timer;
+        let timer: NodeJS.Timeout;
 
         const handleTyping = () => {
             if (isDeleting) {
@@ -160,7 +191,7 @@ function TypingText() {
         timer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
 
         return () => clearTimeout(timer);
-    }, [currentText, isDeleting, phraseIndex]);
+    }, [currentText, isDeleting, phraseIndex, phrases]); 
 
     return (
         <span className="relative text-blue-600">
@@ -205,7 +236,7 @@ function Hero({ onOpenForm }: HeroProps) {
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white ">
-           
+            
             
             {/* Subtle animated background shapes */}
             <motion.div
@@ -214,7 +245,8 @@ function Hero({ onOpenForm }: HeroProps) {
             />
             <motion.div
                 className="absolute bottom-20 right-10 w-96 h-96 bg-purple-50/50 rounded-full blur-3xl opacity-50"
-                animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 2 } }}
+                // FIX: Use TargetAndTransition for the composite animation object
+                animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition as Transition, delay: 2 } } as TargetAndTransition}
             />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 py-20">
@@ -277,7 +309,7 @@ function Hero({ onOpenForm }: HeroProps) {
                         <Button
                             variant="outline"
                             size="lg"
-              onClick={onOpenForm}
+                            onClick={onOpenForm}
                             className="group px-8 py-4 text-lg font-semibold border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 shadow-md ring-offset-white"
                         >
                             Request a Demo
@@ -330,30 +362,28 @@ function Logos() {
         { name: 'Mailchimp', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/mailchimp.svg' },
         { name: 'Canva', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg' },
         { name: 'Semrush', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/semrush.svg' },
-        { name: 'Hootsuite', src: 'https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/twitter.svg' },   
+        { name: 'Hootsuite', src: 'https://cdn.jsdelivr.net/npm/simple-icons@9.21.0/icons/twitter.svg' }, 
         { name: 'Hootsuite', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/hootsuite.svg' },
     ];
-    const allLogos = [...logos, ...logos, ...logos];
+    // Duplicate the list for the seamless loop
+    const allLogos = [...logos, ...logos, ...logos]; 
 
     return (
         <section className="bg-gray-50 py-4 border-t border-gray-100">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="relative overflow-x-hidden">
-                    {/* Updated for consistent styling */}
                     <div className="inline-flex animate-slide-right whitespace-nowrap py-4">
                         {allLogos.map((logo, index) => (
                             <div
                                 key={index}
                                 className="mx-4 flex h-14 w-32 shrink-0 items-center justify-center rounded-xl bg-white p-2 shadow-sm border border-gray-100 transition duration-300 hover:shadow-lg sm:w-20 lg:w-28"
                             >
-                                {/* Replaced Next.js <Image> with standard <img> */}
-                                <img
+                                <Image
                                     src={logo.src}
                                     alt={logo.name + ' Logo'}
-                                    // Use CSS classes for sizing instead of width/height attributes for better responsiveness
+                                    width={100} // Set a reasonable size for optimization
+                                    height={40} // Set a reasonable size for optimization
                                     className="h-full w-auto object-contain opacity-50 transition-opacity hover:opacity-100"
-                                    // Robust error handler for image loading
-                                    onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src="https://placehold.co/100x40/f1f1f1/999?text=Logo"; }}
                                 />
                             </div>
                         ))}
@@ -375,10 +405,7 @@ export default function HomePage() {
         <main className="min-h-screen bg-gray-50 antialiased">
             <Hero onOpenForm={handleOpenForm} />
             <Logos />
-      <ContactForm isOpen={isFormOpen} onClose={handleCloseForm} />
-            {/* <ContactForm isOpen={isFormOpen} onClose={handleCloseForm} /> */}
-            
-            {/* Simulated Modal/Form (Moved the modal logic here for a complete, runnable single file) */}
+            <ContactForm isOpen={isFormOpen} onClose={handleCloseForm} />
         </main>
     );
 }

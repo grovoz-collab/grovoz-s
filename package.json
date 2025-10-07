@@ -2,7 +2,7 @@
   "name": "grovoz-s",
   "description": "Build a full-stack web application with Next.js.",
   "private": true,
-  "cloudflare": {
+"cloudflare": {
     "label": "Next.js Framework Starter",
     "products": [
       "Workers"
@@ -14,37 +14,30 @@
     "preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/e42eec61-db86-49c8-7b29-c3ed4783e400/public",
     "publish": true
   },
-  "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "@opennextjs/cloudflare": "1.3.0",
-    "@react-three/fiber": "^9.3.0",
-    "@tailwindcss/postcss": "^4.1.13",
-    "@tailwindcss/typography": "^0.5.16",
-    "@vercel/speed-insights": "^1.2.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.14",
-    "lucide-react": "^0.544.0",
-<<<<<<< HEAD
-    "next": "15.3.3",
-    "nodemailer": "^7.0.6",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-=======
-    "next": "^15.3.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
->>>>>>> e1e9acbad250492274defdd7d0f76ed997e5f442
-    "react-hook-form": "^7.62.0",
-    "react-icons": "^5.5.0",
-    "react-tsparticles": "^2.12.2",
-    "recharts": "^3.2.0",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7",
-    "three": "^0.180.0",
-    "tsparticles": "^3.9.1",
-    "tsparticles-slim": "^2.12.0"
-  },
+  "dependencies": {  "@emailjs/browser": "^4.4.1",
+  "@opennextjs/cloudflare": "1.3.0",
+  "@react-three/fiber": "^9.3.0",
+  "@tailwindcss/postcss": "^4.1.13",
+  "@tailwindcss/typography": "^0.5.16",
+  "@vercel/speed-insights": "^1.2.0",
+  "class-variance-authority": "^0.7.1",
+  "clsx": "^2.1.1",
+  "framer-motion": "^12.23.14",
+  "lucide-react": "^0.544.0",
+  "next": "^15.3.3",
+  "nodemailer": "^7.0.6",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
+  "react-hook-form": "^7.62.0",
+  "react-icons": "^5.5.0",
+  "react-tsparticles": "^2.12.2",
+  "recharts": "^3.2.0",
+  "tailwind-merge": "^3.3.1",
+  "tailwindcss-animate": "^1.0.7",
+  "three": "^0.180.0",
+  "tsparticles": "^3.9.1",
+  "tsparticles-slim": "^2.12.0"
+},
   "devDependencies": {
     "@eslint/eslintrc": "3",
     "@types/node": "24.0.4",
