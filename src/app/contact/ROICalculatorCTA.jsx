@@ -1,5 +1,12 @@
+"use client"; // Ensure this is at the top if this is a Next.js App Router component
+
 import React, { useState, useCallback } from 'react';
-import { Zap, BookOpen, ArrowRight } from 'lucide-react'; // Added BookOpen and ArrowRight icons
+import { Zap, BookOpen, ArrowRight, Phone } from 'lucide-react'; // Added Phone icon for the new button
+
+// Assuming your ContactForm component is in the same directory
+// If not, adjust the import path:
+import ContactForm from '../components/ContactForm'; 
+
 
 // --- Custom Button Component ---
 // This component simulates the 'Button' used in the original JSX snippet,
@@ -8,11 +15,17 @@ const Button = ({ children, onClick, className, variant = 'default' }) => {
     let baseStyles = "transition duration-300 ease-in-out font-bold tracking-wide rounded-xl focus:outline-none focus:ring-4 transform active:scale-95 flex items-center justify-center space-x-2";
     let variantStyles;
 
-    // Defining the 'cta-alt' variant to contrast sharply with the CTA background
+    // Defining the 'cta-alt' variant to contrast sharply with the darker CTA gradient color
     if (variant === 'cta-alt') {
         // Bright white background with text matching the darker CTA gradient color
         variantStyles = "bg-white text-purple-700 hover:bg-gray-100 ring-white/50 shadow-xl hover:shadow-2xl";
-    } else {
+    } 
+    // New 'cta-primary' variant for the main contact form button
+    else if (variant === 'cta-primary') {
+        // High-contrast, vibrant main button
+        variantStyles = "bg-red-600 text-white hover:bg-red-700 ring-red-300 shadow-2xl hover:shadow-3xl";
+    }
+    else {
         // Default style (if needed elsewhere)
         variantStyles = "bg-indigo-600 text-white hover:bg-indigo-700 ring-indigo-300";
     }
@@ -28,6 +41,7 @@ const Button = ({ children, onClick, className, variant = 'default' }) => {
 };
 
 // --- Blog Card Component (New) ---
+// (Keeping BlogCard unchanged for brevity, as requested)
 const BlogCard = ({ title, excerpt, date, category, imageUrl }) => {
     return (
         <div 
@@ -39,7 +53,6 @@ const BlogCard = ({ title, excerpt, date, category, imageUrl }) => {
                     src={imageUrl} 
                     alt={title} 
                     className="w-full h-full object-cover transition duration-500 hover:scale-110"
-                    // Fallback removed as placehold.co URLs provide descriptive text
                 />
             </div>
 
@@ -78,6 +91,12 @@ const BlogCard = ({ title, excerpt, date, category, imageUrl }) => {
 // --- Main Application Component ---
 const App = () => {
     const [message, setMessage] = useState('');
+    // New state for controlling the ContactForm popup
+    const [isFormOpen, setIsFormOpen] = useState(false); 
+
+    // Handlers for the ContactForm popup
+    const openContactForm = useCallback(() => setIsFormOpen(true), []);
+    const closeContactForm = useCallback(() => setIsFormOpen(false), []);
 
     // Dummy blog post data updated with new subjects and relevant image placeholders
     const blogPosts = [
@@ -87,7 +106,7 @@ const App = () => {
             excerpt: "Explore the advanced content frameworks that drive organic search visibility and translate page views into tangible sales outcomes.",
             date: "Oct 5, 2025",
             category: "SEO & Content",
-            imageUrl: "/Firefly_Authority content on strategies to improve SEO and boost conversions 327526.webp" // Green/White Placeholder
+            imageUrl: "/Firefly_Authority content on strategies to improve SEO and boost conversions 327526.webp"
         },
         {
             id: 2,
@@ -95,7 +114,7 @@ const App = () => {
             excerpt: "A comprehensive look at the unique economic and consumer trends across the MENA region, detailing actionable insights for successful business growth, particularly in the Dubai hub.",
             date: "Sep 28, 2025",
             category: "Regional Markets",
-            imageUrl: "/Firefly__Regional trend analysis for business growth including Dubai market insights 812328.webp" // Red/White Placeholder
+            imageUrl: "/Firefly__Regional trend analysis for business growth including Dubai market insights 812328.webp"
         },
         {
             id: 3,
@@ -103,99 +122,71 @@ const App = () => {
             excerpt: "Review our in-depth case studies that showcase quantifiable ROI and positive customer service experiences, providing transparent evidence of our commitment to client success.",
             date: "Sep 20, 2025",
             category: "Case Studies",
-            imageUrl: "/Firefly__Case studies showing measurable results with detailed customer service experience 472082.webp" // Blue/White Placeholder
+            imageUrl: "/Firefly__Case studies showing measurable results with detailed customer service experience 472082.webp"
         },
     ];
 
-    // Handler for the ROI Calculator CTA click event
-    const handleAccessCalculator = useCallback(() => {
-        const timestamp = new Date().toLocaleTimeString();
-        // Simulate navigation and provide user feedback
-        setMessage(`[${timestamp}] Navigating to the ROI Calculator page. Your projections are loading...`);
-    }, []);
-
-    // Handler for the Case Studies CTA click event
-    const handleAccessCaseStudies = useCallback(() => {
-        const timestamp = new Date().toLocaleTimeString();
-        // Simulate navigation and provide user feedback
-        setMessage(`[${timestamp}] Redirecting to Case Studies portfolio and demo booking...`);
-    }, []);
-
+  
     return (
         // Main container now only handles background and vertical padding
         <div className="bg-gray-50 py-16">
             {/* Injecting a style tag for the 'Inter' font to ensure good typography */}
-            <style>
-                {`
-                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-                    .font-inter {
-                        font-family: 'Inter', sans-serif;
-                    }
-                    /* Custom shadow for extra pop on hover */
-                    .hover\\:shadow-3xl:hover {
-                        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-                    }
-                `}
-            </style>
+          
 
             {/* 1. CTA GRID Section (Constrained to max-w-6xl) */}
-            <div className="w-full max-w-6xl font-inter px-4 sm:px-8 mx-auto mb-24">
+            <div className="w-full max-w-6xl font-inter px-4 sm:px-8 mx-auto mb-16">
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    {/* ROI Calculator CTA - First Section */}
+                <h2 className="text-4xl font-extrabold text-gray-900 mb-12 text-center">
+                    Ready to Scale Your Business?
+                </h2>
+                
+                {/* The CTA Grid is now 3 columns on large screens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">                    
+                    {/* NEW: Primary Contact CTA - Opens the Popup */}
+                 
+                    {/* ROI Calculator CTA - Existing Section */}
                     <div
-                        // Padding adjusted to decrease height: py-6 on small, py-8 on medium screens
                         className="bg-gradient-to-r from-blue-700 to-purple-700 px-8 py-6 md:px-10 md:py-8 rounded-2xl text-white shadow-2xl 
-                                    transition duration-500 hover:shadow-3xl hover:scale-[1.01] transform h-full flex flex-col justify-between"
+                                transition duration-500 hover:shadow-3xl hover:scale-[1.01] transform h-full flex flex-col justify-between"
                     >
-                        {/* Content inside the CTA is now forced to stack vertically (flex-col) for better fit in the grid column */}
                         <div className="flex flex-col gap-4">
-                            
                             <h3 className="text-3xl font-extrabold leading-tight">
                                 <Zap className="inline w-6 h-6 mr-3 -mt-1 text-yellow-300" />
-                                Interactive ROI Calculator
+                                ROI Calculator
                             </h3>
                             <p className="text-lg opacity-90 leading-relaxed">
-                                Click to access our web page calculator that provides realistic projections to boost your business growth. Our tool offers an experience tailored to your industry, current performance, and budget allocation across all regional markets.
+                                Access our web page calculator that provides realistic projections to boost your business growth. 
                             </p>
                         </div>
-                        
                         <Button
-                            onClick={handleAccessCalculator}
-                            // Button spans full width of the card for better prominence
+                                onClick={openContactForm} // **This opens your ContactForm popup**
                             className="text-lg w-full mt-6 px-10 py-4" 
-                            variant="cta-alt"
+                            variant="cta-primary"
                         >
                             Access Calculator
                         </Button>
                     </div>
 
-                    {/* Case Studies CTA - New Section */}
+                    {/* Case Studies CTA - Existing Section */}
                     <div
-                        // Padding adjusted to decrease height: py-6 on small, py-8 on medium screens
                         className="bg-gradient-to-r from-teal-600 to-green-500 px-8 py-6 md:px-10 md:py-8 rounded-2xl text-white shadow-2xl
-                                    transition duration-500 hover:shadow-3xl hover:scale-[1.01] transform h-full flex flex-col justify-between"
+                                transition duration-500 hover:shadow-3xl hover:scale-[1.01] transform h-full flex flex-col justify-between"
                     >
-                         {/* Content inside the CTA is now forced to stack vertically (flex-col) for better fit in the grid column */}
                         <div className="flex flex-col gap-4">
-                            
                             <h3 className="text-3xl font-extrabold leading-tight">
                                 <BookOpen className="inline w-6 h-6 mr-3 -mt-1 text-yellow-300" />
-                                Explore Success Stories
+                                Success Stories
                             </h3>
                             <p className="text-lg opacity-90 leading-relaxed">
-                                Click to explore detailed case studies showing our experience with businesses in various markets, including Dubai, showcasing measurable growth and success stories.
+                                Explore detailed case studies showing our experience with businesses in various markets, including Dubai.
                             </p>
                         </div>
-                        
                         <Button
-                            onClick={handleAccessCaseStudies}
+                                onClick={openContactForm} // **This opens your ContactForm popup**
                             className="text-lg w-full mt-6 px-10 py-4"
                             variant="cta-alt"
                         >
-                            <ArrowRight className="w-5 h-5 mr-2" />
-                            Schedule a Demo & View Full Cases
+                            View Full Cases
                         </Button>
                     </div>
                 </div>
@@ -230,6 +221,14 @@ const App = () => {
                     </p>
                 )}
             </div>
+
+            {/* 4. RENDER THE CONTACT FORM POPUP */}
+            {/* The ContactForm handles its own presentation (popup, background, animation) */}
+            <ContactForm 
+                isOpen={isFormOpen} 
+                onClose={closeContactForm} 
+            />
+
         </div>
     );
 };
