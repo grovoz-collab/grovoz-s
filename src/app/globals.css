@@ -127,3 +127,76 @@ html {
   color: #fff;
   font-weight: bold;
 }
+
+/* Add this to your global CSS file for the gradient card effect */
+
+/* The card container class */
+.gradient-card {
+  /* Initial box shadow to mimic a light border before hover */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.5s ease-in-out;
+}
+
+/* Create the pseudo-element that holds the rotating gradient */
+.gradient-card::before {
+  content: "";
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  
+  /* The multi-color gradient */
+  background: conic-gradient(
+    from 0deg,
+    #4f46e5,    /* indigo-600 */
+    #ec4899,    /* pink-500 */
+    #3b82f6,    /* blue-500 */
+    #10b981,    /* emerald-500 */
+    #4f46e5     /* indigo-600 */
+  );
+  
+  z-index: 0;
+  border-radius: 12px;
+  opacity: 0; 
+  transition: opacity 0.5s;
+}
+
+/* Ensure card content sits above the gradient */
+.gradient-card > * {
+  position: relative;
+  z-index: 3; /* Must be higher than :after mask */
+}
+
+/* ANIMATION ON HOVER */
+.gradient-card:hover::before {
+  opacity: 0.8; /* Fade in the gradient */
+  animation: gradient-rotate 3s linear infinite; /* Start the rotation */
+}
+
+/* Define the rotation animation */
+@keyframes gradient-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Create the inner mask to hide the gradient and only show the border effect */
+.gradient-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px; /* The 1px gap forms the visual gradient border */
+  background-color: white; /* Matches the card background color */
+  z-index: 2; /* Needs to be between the gradient (0) and content (3) */
+  border-radius: 11px;
+}
+
+/* Radial Gradient for the CTA section background */
+.bg-radial-gradient {
+  /* This creates a light, centered glow effect on the dark background */
+  background: radial-gradient(
+    circle at center,
+    rgba(79, 70, 229, 0.1) 0%, /* Light Indigo/Blue Glow */
+    rgba(15, 23, 42, 0) 60%    /* Transparent, blending into slate-900 */
+  );
+}

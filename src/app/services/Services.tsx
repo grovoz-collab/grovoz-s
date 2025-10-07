@@ -3,9 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { 
     Search, Users, Target, Mail, FileText, MonitorSmartphone, TrendingUp, ShieldCheck, LineChart,
-    HeartHandshake, Building, Briefcase, 
-    Stethoscope, ShoppingCart, Factory, Database, Milestone, Layers, BrainCircuit, Lock, Award,
-    ChevronDown, Users2, BarChart2, CloudCog, Shield, X, LucideProps
+     Building, Briefcase, 
+    Stethoscope, ShoppingCart, Factory, Database, Milestone, ChevronDown,  X, LucideProps
 } from 'lucide-react';
 import { ForwardRefExoticComponent, RefAttributes } from 'react'; // Make sure these are imported for the icon type
 
@@ -14,7 +13,6 @@ interface ServiceDetail {
     title: string;
     text: string;
 }
-type WhyGrovozTabKey = keyof typeof whyGrovozTabs;
 
 // Define the complete interface for a Service item
 interface ServiceItem {
@@ -113,45 +111,7 @@ const services: ServiceItem[] = [
     }
 ];
 
-// Data for the "Why Grovoz" tab section (Unchanged)
-const whyGrovozTabs = {
-    expertise: {
-        title: "Proven Expertise",
-        icon: Award,
-        features: [
-            { icon: Award, title: "Certified Specialists", description: "Google-certified PPC and SEO experts managing million-dollar campaigns." },
-            { icon: Users2, title: "Creative Teams", description: "Driving viral social media campaigns and crafting compelling brand stories." },
-            { icon: MonitorSmartphone, title: "High-Performance Development", description: "Building seamless, high-performance web and mobile platforms." },
-        ]
-    },
-    transparency: {
-        title: "Transparent Collaboration",
-        icon: Users,
-        features: [
-            { icon: BarChart2, title: "Detailed Performance Reporting", description: "Regular, easy-to-understand reports with clear performance metrics." },
-            { icon: HeartHandshake, title: "Dedicated Support & Partnership", description: "A collaborative approach with direct access to your dedicated account manager." },
-            { icon: FileText, title: "Clear Strategy Documentation", description: "Honest, data-driven recommendations and clear documentation of all strategies." },
-        ]
-    },
-    technology: {
-        title: "Cutting-Edge Technology",
-        icon: CloudCog,
-        features: [
-            { icon: BrainCircuit, title: "AI-Powered Optimization", description: "Using machine learning for bid management and advanced campaign optimization." },
-            { icon: Search, title: "Advanced Analysis Tools", description: "Leveraging top-tier keyword research, competitor analysis, and heat mapping software." },
-            { icon: Layers, title: "Integrated Marketing Platforms", description: "Utilizing marketing automation and CDPs with custom, real-time data dashboards." },
-        ]
-    },
-    security: {
-        title: "Data Privacy & Protection",
-        icon: Shield,
-        features: [
-            { icon: Lock, title: "Comprehensive Compliance", description: "Full GDPR & CCPA compliance with secure data handling and encrypted storage." },
-            { icon: ShieldCheck, title: "Advanced Security Infrastructure", description: "Regular security audits, vulnerability assessments, and restricted access controls." },
-            { icon: Database, title: "Complete Data Segregation", description: "Ensuring complete client confidentiality with robust backup and disaster recovery systems." },
-        ]
-    }
-};
+
 
 // Data for the industries section (Unchanged)
 const industries = [
@@ -399,7 +359,6 @@ const FormPopup = ({ isVisible, onClose, heading }: FormPopupProps) => {
 };
 // Main component for the landing page
 export default function GrovozMarketingPage() {
-    const [activeTab, setActiveTab] = useState<WhyGrovozTabKey>('expertise');
     const [openFaq, setOpenFaq] = useState<number | null>(0); 
     const [activeService, setActiveService] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -580,64 +539,9 @@ export default function GrovozMarketingPage() {
             {/* Why Grovoz Tabs Section (Unchanged) */}
             <section className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
-                        <motion.div // ✅ ADD the viewport prop here:
-                            {...fadeInUp} 
-                            viewport={{ once: true }} 
-                            className="text-center mb-16"
-                        >
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">The Grovoz Expert Advantage</h2>
-                        <p className="text-xl text-slate-600 max-w-3xl mx-auto">Discover why industry leaders trust us to deliver results.</p>
-                    </motion.div>
-                    <div className="flex flex-wrap justify-center mb-10 gap-2 md:gap-4 p-2 bg-slate-100 rounded-full">
-                          { (Object.keys(whyGrovozTabs) as (keyof typeof whyGrovozTabs)[]).map(key => {
-                            const tab = whyGrovozTabs[key];
-                            return (
-                                <button 
-                                    key={key} 
-                                    onClick={() => setActiveTab(key)} 
-                                    className={`relative px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold transition-colors duration-300 ${
-                                        activeTab === key ? 'text-white' : 'text-slate-600 hover:text-slate-900'
-                                    }`}
-                                >
-                                    {activeTab === key && (
-                                        <motion.div 
-                                            layoutId="activePill" 
-                                            className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full z-0"
-                                        />
-                                    )}
-                                    <span className="relative z-10 flex items-center gap-2">
-                                        <tab.icon className="w-5 h-5" />
-                                        {tab.title}
-                                    </span>
-                                </button>
-                            );
-                        })}
-                    </div>
-                    <AnimatePresence mode="wait">
-                        <motion.div 
-                            key={activeTab} 
-                            initial={{ opacity: 0, y: 20 }} 
-                            animate={{ opacity: 1, y: 0 }} 
-                            exit={{ opacity: 0, y: -20 }} 
-                            transition={{ duration: 0.4 }}
-                        >
-                            <div className="grid md:grid-cols-3 gap-8 mt-8">
-                                {whyGrovozTabs[activeTab].features.map(feature => (
-                                    <div key={feature.title} className="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-blue-500">
-                                                <feature.icon className="w-6 h-6"/>
-                                            </div>
-                                            <div>
-                                                <h4 className="text-lg font-bold text-slate-800">{feature.title}</h4>
-                                                <p className="text-slate-500">{feature.description}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
+                       
+                   
+                  
                 </div>
             </section>
 
@@ -712,24 +616,47 @@ export default function GrovozMarketingPage() {
             </section>
             
             {/* CTA Section - UPDATED onClick to openModal */}
-            <section className="py-24 bg-slate-900">
-                <div className="max-w-4xl mx-auto px-6 text-center text-white">
-                    <motion.div {...fadeInUp}>
-                        <h2 className="text-4xl font-bold mb-6">Do not Wait For Your Competition to Get Ahead.</h2>
-                        <p className="text-xl text-slate-300 mb-8">
-The Grovoz team of experts is ready to transform your digital presence. Schedule your free consultation today and let&rsquo;s build your success story together.
-                        </p>
-                        <motion.button 
-                            onClick={() => openModal("General Digital Marketing Strategy")}
-                            className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg transition-transform duration-300 transform hover:scale-105" 
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            Schedule Your Free Consultation
-                        </motion.button>
-                    </motion.div>
-                </div>
-            </section>
-        </div>
+<section className="py-24 bg-slate-900 relative overflow-hidden">
+    {/* Background Glow/Gradient for Aesthetic Depth */}
+    <div className="absolute inset-0 bg-radial-gradient"></div>
+    
+    <div className="max-w-4xl mx-auto px-6 text-center text-white relative z-10">
+        <motion.div {...fadeInUp}>
+            <h2 className="text-4xl font-bold mb-6 text-white">
+                Do not Wait For Your Competition to Get Ahead.
+            </h2>
+            <p className="text-xl text-slate-300 mb-8">
+                The Grovoz team of experts is ready to transform your digital presence. Schedule your free consultation today and let&rsquo;s build your success story together.
+            </p>
+            <motion.button 
+                onClick={() => openModal("General Digital Marketing Strategy")}
+                className="
+                    relative 
+                    bg-gradient-to-r from-blue-500 to-purple-600 
+                    text-white 
+                    px-10 py-4 
+                    rounded-full 
+                    font-bold text-lg 
+                    shadow-xl 
+                    
+                    /* Base Styles for Gradient Button */
+                    transition-all duration-300 ease-in-out
+                " 
+                // Enhanced Hover Animation: Scales up and adds a glowing shadow pulse
+                whileHover={{ 
+                    scale: 1.05,
+                    boxShadow: "0 0 40px rgba(79, 70, 229, 0.8), 0 0 15px rgba(139, 92, 246, 0.6)" 
+                }}
+                // Enhanced Tap Animation: Scales down slightly AND brightens for instant feedback
+                whileTap={{ 
+                    scale: 0.98, // Smaller scale reduction for a firmer click
+                    filter: 'brightness(1.2)' // Immediate visual shift on click
+                }}
+            >
+                Schedule Your Free Consultation
+            </motion.button>
+        </motion.div>
+    </div>
+</section>        </div>
     );
 }

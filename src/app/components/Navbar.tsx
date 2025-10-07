@@ -6,7 +6,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-
 const menuVariants = {
   hidden: { height: 0, opacity: 0, transition: { duration: 0.3 } },
   visible: { height: "auto", opacity: 1, transition: { duration: 0.3 } },
@@ -18,9 +17,9 @@ export default function Navbar() {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   return (
-    <header className="sticky top-0 z-[100] bg-white/70 backdrop-blur border-b border-black/5">
+    <header className="fixed top-0 left-0 w-full z-[100] bg-white border-b border-gray-200 shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Left: Logo */}
+        {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <motion.div style={{ rotate }}>
             <Image
@@ -33,7 +32,7 @@ export default function Navbar() {
           </motion.div>
         </Link>
 
-        {/* Right: Nav + Button */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-8 text-sm font-medium">
             {[
@@ -49,13 +48,12 @@ export default function Navbar() {
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-blue-600">
                   {item.label}
                 </span>
-                {/* underline animation */}
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
           </nav>
 
-          {/* Gradient CTA Button with Pulse */}
+          {/* CTA Button */}
           <motion.div
             animate={{
               scale: [1, 1.05, 1],
@@ -75,16 +73,14 @@ export default function Navbar() {
               href="/#demo"
               className="relative px-5 py-2 text-sm rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md 
                          transition-all duration-300 transform hover:scale-110 hover:shadow-blue-500/50"
-              onClick={() => setOpen(false)}
             >
               <span className="relative z-10">Book a demo</span>
-              {/* gradient overlay for subtle shift on hover */}
               <span className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 hover:opacity-100 transition-opacity duration-500"></span>
             </Link>
           </motion.div>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <button
           className="md:hidden p-2 rounded-xl hover:bg-zinc-100"
           onClick={() => setOpen(!open)}
@@ -94,9 +90,9 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile Dropdown */}
       <motion.div
-        className="md:hidden border-t border-black/5 px-4 py-3 space-y-2 overflow-hidden flex flex-col items-center"
+        className="md:hidden border-t border-gray-200 px-4 py-3 space-y-2 overflow-hidden flex flex-col items-center bg-white"
         variants={menuVariants}
         initial="hidden"
         animate={open ? "visible" : "hidden"}
@@ -108,7 +104,7 @@ export default function Navbar() {
           Contact
         </Link>
 
-        {/* Mobile CTA with Pulse */}
+        {/* Mobile CTA */}
         <motion.div
           animate={{
             scale: [1, 1.05, 1],

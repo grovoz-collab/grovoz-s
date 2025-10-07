@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image"; // Make sure to import the Image component

@@ -295,7 +295,7 @@ function Hero({ onOpenForm }: HeroProps) {
                     >
                         {/* Primary Button - Claim Your Free Month (using standard href) */}
                         <Button
-                            href="#demo"
+                            onClick={onOpenForm}
                             size="lg"
                             variant="primary"
                             className="group px-8 py-4 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300 ring-offset-white"
@@ -307,10 +307,10 @@ function Hero({ onOpenForm }: HeroProps) {
 
                         {/* Secondary Button - Request a Demo */}
                         <Button
+                            href="#demo"
                             variant="outline"
                             size="lg"
-                            onClick={onOpenForm}
-                            className="group px-8 py-4 text-lg font-semibold border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 shadow-md ring-offset-white"
+                                                        className="group px-8 py-4 text-lg font-semibold border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 shadow-md ring-offset-white"
                         >
                             Request a Demo
                             <ArrowRight className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
