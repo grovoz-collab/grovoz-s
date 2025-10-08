@@ -48,8 +48,10 @@ const Button = ({ children, className = '', onClick, type = 'button', disabled, 
             type={type}
             onClick={onClick}
             disabled={disabled}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            // UPDATED: New interactive animation (lift and shadow on hover, deeper press on tap)
+            whileHover={{ y: -2, boxShadow: "0 10px 15px rgba(0, 0, 0, 0.5)" }} 
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
             className={`inline-flex items-center justify-center rounded-xl font-semibold transition-colors duration-200 
                 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-slate-900 
                 ${variantStyle} ${className}
@@ -206,10 +208,11 @@ export default function App() {
         return (
             <section id="contact-success" className={`${wrapperClass} justify-center`}>
                 {fontAndStyleTags}
+                {/* UPDATED: Success card now slides down from the top */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
+                    initial={{ opacity: 0, y: -100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ type: "tween", duration: 0.5, ease: "easeOut" }}
                     // Adopted success card styles from the second component
                     className="bg-green-700/20 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-green-400/50 h-full flex flex-col justify-center items-center text-center shadow-2xl max-w-xl mx-auto"
                 >
@@ -240,11 +243,12 @@ export default function App() {
                 
                 {/* Contact Form (Takes 2/3 width on large screens) */}
                 <div className="lg:col-span-2">
+                    {/* UPDATED: Form Header now has a zoom-in spring effect */}
                     <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
+                        transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
                         className="text-center mb-10 lg:text-left"
                     >
                         <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-6">
@@ -384,11 +388,12 @@ export default function App() {
                 </div>
                 
                 {/* Contact Info (Takes 1/3 width on large screens) */}
+                {/* FIXED: Removed the vertical (y: 100) slide animation to prevent mobile layout shift */}
                 <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    transition={{ duration: 1.0, delay: 0.4 }} // Slowed down for a calmer reveal
                     className="space-y-12 lg:col-span-1 mt-12 lg:mt-32"
                 >
                     
@@ -472,10 +477,10 @@ export default function App() {
                         <h3 className="text-3xl font-bold text-white mb-6">Connect with Grovoz</h3>
                         
                         {/* LinkedIn */}
-                        <a href="#" className="block">
-                            <div className="flex items-start gap-4 p-4 bg-white/5 rounded-xl transition-colors hover:bg-white/10">
+                        <a href="https://www.linkedin.com/company/grovoz-marketing/" className="block" target="_blank" rel="noopener noreferrer">
+                            <div className="flex items-start gap-4 p-4 bg-white/5 rounded-xl transition-colors hover:bg-white/10 group">
                                 <div className="w-12 h-12 bg-gradient-to-r from-blue-700 to-blue-400 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
-                                    <Linkedin className="w-6 h-6 text-white" />
+                                    <Linkedin className="w-6 h-6 text-white transition-colors duration-300 ease-in-out group-hover:text-blue-200" />
                                 </div>
                                 <div>
                                     <div className="text-white font-semibold">LinkedIn: Follow Grovoz Marketing</div>
@@ -487,10 +492,10 @@ export default function App() {
                         </a>
 
                         {/* Twitter */}
-                        <a href="#" className="block">
-                            <div className="flex items-start gap-4 p-4 bg-white/5 rounded-xl transition-colors hover:bg-white/10">
+                        <a href="https://twitter.com/grovoz" className="block" target="_blank" rel="noopener noreferrer">
+                            <div className="flex items-start gap-4 p-4 bg-white/5 rounded-xl transition-colors hover:bg-white/10 group">
                                 <div className="w-12 h-12 bg-gradient-to-r from-sky-400 to-cyan-400 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
-                                    <Twitter className="w-6 h-6 text-white" />
+                                    <Twitter className="w-6 h-6 text-white transition-colors duration-300 ease-in-out group-hover:text-sky-200" />
                                 </div>
                                 <div>
                                     <div className="text-white font-semibold">Twitter: Get Daily Marketing Tips</div>
