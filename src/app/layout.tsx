@@ -18,15 +18,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
+        
         {/*
-          CRITICAL FIX: Wrap {children} in a main tag (or div)
-          and apply 'pt-16' (padding-top: 4rem) to push the content
-          down, clearing the fixed 4rem (h-16) high Navbar.
+          FIX: The 'pt-16' class adds top padding equal to the navbar's 
+          height (h-16 or 64px), preventing the content from hiding underneath 
+          the fixed navigation bar.
         */}
         <main className="pt-16">
           {children}
         </main>
-        
+
         <SpeedInsights />
         <ScrollToTopButton />
         <Footer />
