@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           height (h-16 or 64px), preventing the content from hiding underneath 
           the fixed navigation bar.
         */}
-        <main className="pt-16">
+        <main >
           {children}
         </main>
 
