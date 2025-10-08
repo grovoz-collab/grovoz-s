@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-// FIX: Import specific types from framer-motion
 import { motion, type Variants, type Transition, type TargetAndTransition } from "framer-motion";
 import { ArrowRight, Fingerprint, Puzzle, Code, Sparkles, Zap } from "lucide-react"; 
 // Assuming ContactForm is defined elsewhere
@@ -15,7 +14,7 @@ import Image from "next/image";
  */
 const cn = (...classes: string[]): string => classes.filter(Boolean).join(' ');
 
-// --- UTILITY COMPONENTS ---
+// --- UTILITY COMPONENTS (Unchanged) ---
 
 // Define the types for the Button component's props
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -115,13 +114,11 @@ const Badge: React.FC<BadgeProps> = ({ className, variant, children, ...props })
 };
 
 
-// --- FRAMER MOTION VARIANTS ---
-// FIX: Explicitly type the variants using the imported Variants type.
+// --- FRAMER MOTION VARIANTS (Unchanged) ---
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        // FIX: Use Transition type here to avoid 'no-explicit-any'
         transition: {
             staggerChildren: 0.2,
             delayChildren: 0.1
@@ -129,21 +126,17 @@ const containerVariants: Variants = {
     }
 };
 
-// FIX: Explicitly type the variants using the imported Variants type.
 const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        // FIX: Use Transition type here to avoid 'no-explicit-any'
         transition: { duration: 0.8, ease: "easeOut" } as Transition 
     }
 };
 
-// FIX: Explicitly type the animation object using the imported TargetAndTransition type.
 const floatingAnimation: TargetAndTransition = {
     y: [-10, 10, -10],
-    // FIX: Use Transition type here to avoid 'no-explicit-any'
     transition: {
         duration: 4,
         repeat: Infinity,
@@ -152,7 +145,7 @@ const floatingAnimation: TargetAndTransition = {
 };
 
 
-// --- TYPING TEXT ---
+// --- TYPING TEXT (Unchanged) ---
 const TYPING_PHRASES = ["Digital Marketing.", "SEO Optimization.", "Brand Strategy.", "Content Creation."];
 
 function TypingText() {
@@ -207,7 +200,7 @@ function TypingText() {
 }
 
 
-// --- HERO SECTION ---
+// --- HERO SECTION (FIX APPLIED HERE) ---
 interface HeroProps {
     onOpenForm: () => void;
 }
@@ -235,8 +228,8 @@ function Hero({ onOpenForm }: HeroProps) {
     ];
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white ">
-            
+        // FIX: Added pt-16 (padding-top: 4rem) here to clear the fixed navbar.
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white pt-16">
             
             {/* Subtle animated background shapes */}
             <motion.div
@@ -310,7 +303,7 @@ function Hero({ onOpenForm }: HeroProps) {
                             href="#demo"
                             variant="outline"
                             size="lg"
-                                                        className="group px-8 py-4 text-lg font-semibold border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 shadow-md ring-offset-white"
+                            className="group px-8 py-4 text-lg font-semibold border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 shadow-md ring-offset-white"
                         >
                             Request a Demo
                             <ArrowRight className="w-5 h-5 ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
@@ -348,7 +341,7 @@ function Hero({ onOpenForm }: HeroProps) {
     );
 }
 
-// The Logos section component with an animating loop (now uses standard <img> tag)
+// The Logos section component (Unchanged)
 function Logos() {
     const logos = [
         { name: 'Google', src: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg' },
@@ -394,7 +387,7 @@ function Logos() {
     );
 }
 
-// The main page component that now manages the form state
+// The main page component (Unchanged)
 export default function HomePage() {
     const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -403,6 +396,7 @@ export default function HomePage() {
 
     return (
         <main className="min-h-screen bg-gray-50 antialiased">
+            {/* The Hero component now contains the pt-16 fix */}
             <Hero onOpenForm={handleOpenForm} />
             <Logos />
             <ContactForm isOpen={isFormOpen} onClose={handleCloseForm} />
