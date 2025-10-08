@@ -69,15 +69,15 @@ export default function FooterSection() {
           <div className="md:col-span-2">
   <h4 className="font-semibold mb-4 text-white">Our Location</h4>
             <div className="w-full h-40 md:h-64 rounded-xl overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.624918437279!2d55.27078221501264!3d25.204849983890485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f4341e7f3e6c7%3A0x7c5b51bb9c4e5b0c!2sDubai!5e0!3m2!1sen!2sae!4v1705162173895!5m2!1sen!2sae"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-               allowFullScreen={true}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
+             <iframe
+  src="https://maps.app.goo.gl/9MfahiAzeMY7Wtam8" 
+  width="100%"
+  height="100%"
+  style={{ border: 0 }}
+  allowFullScreen={true}
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+></iframe>
             </div>
           </div>
         </div>

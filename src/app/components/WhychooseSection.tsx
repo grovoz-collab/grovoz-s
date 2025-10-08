@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // FIX: Import the Transition type from framer-motion
-import { motion, type Transition } from "framer-motion"; 
+import { motion } from "framer-motion"; 
 import {
   Award,
   Shield,
@@ -131,26 +131,7 @@ function WhyChooseSection() {
 
   return (
     <section className="py-24 font-sans relative bg-gray-50">
-      {/* Background SVG for infinite animation */}
-      <div className="absolute inset-0 z-0 opacity-10">
-        <motion.svg
-          className="w-full h-full"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 100 100"
-        >
-          {/* FIX: Use the imported Transition type to satisfy the linter */}
-          <motion.path
-            stroke="#1d4ed8"
-            strokeWidth="0.5"
-            d="M 10 50 C 30 10, 70 10, 90 50 C 70 90, 30 90, 10 50"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: false }}
-            transition={{ duration: 3, ease: "easeInOut", repeat: Infinity } as Transition} // Linter Fix applied here
-          />
-        </motion.svg>
-      </div>
+   
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header */}
@@ -198,7 +179,7 @@ function WhyChooseSection() {
                       className={`w-8 h-8 ${advantage.color.replace(
                         "bg-",
                         "text-"
-                      )} group-hover:scale-110 transition-transform duration-300`}
+                      )} group-hover:scale-110 text-white transition-transform duration-300`}
                     />
                   </div>
                   <CardTitle className="text-xl font-bold text-gray-900 mb-2">
