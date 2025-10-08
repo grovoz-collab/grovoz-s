@@ -1,17 +1,16 @@
-'use client';
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Award, Users, Target, TrendingUp } from "lucide-react";
-import {  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export default function About() {
   const [projects, setProjects] = useState(0);
   const [experience, setExperience] = useState(0);
   const [team, setTeam] = useState(0);
-const support = 24;
-  const sectionRef = useRef(null);
+  const support = 24;
+  const sectionRef = useRef<HTMLElement>(null); // Type the ref as HTMLElement
 
-   
   // Sample data for the new growth line chart
   const growthData = [
     { month: 'Jan', growth: 400 },
@@ -22,54 +21,53 @@ const support = 24;
     { month: 'Jun', growth: 1200 },
   ];
 
-useEffect(() => {
+  useEffect(() => {
     const currentRef = sectionRef.current; // Capture the ref value
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    // FIX: Explicitly type the parameters of animateNumber
-                    const animateNumber = (
-                        setter: React.Dispatch<React.SetStateAction<number>>, // Type for setProjects, setExperience, setTeam
-                        target: number,
-                        duration: number
-                    ) => {
-                        let start: number | null = null; // Also good practice to type 'start'
-                        const step = (timestamp: number) => {
-                            if (!start) start = timestamp;
-                            const progress = timestamp - start;
-                            const value = Math.min(progress / duration, 1) * target;
-                            setter(Math.floor(value));
-                            if (progress < duration) {
-                                window.requestAnimationFrame(step);
-                            }
-                        };
-                        window.requestAnimationFrame(step);
-                    };
-
-                    animateNumber(setProjects, 500, 1500);
-                    animateNumber(setExperience, 15, 1500);
-                    animateNumber(setTeam, 50, 1500);
-                    observer.unobserve(entry.target);
-                }
-            });
-        },
-        {
-            threshold: 0.5,
+    const animateNumber = (
+      setter: React.Dispatch<React.SetStateAction<number>>, // Type for setProjects, setExperience, setTeam
+      target: number,
+      duration: number
+    ) => {
+      let start: number | null = null; // Also good practice to type 'start'
+      const step = (timestamp: number) => {
+        if (!start) start = timestamp;
+        const progress = timestamp - start;
+        const value = Math.min(progress / duration, 1) * target;
+        setter(Math.floor(value));
+        if (progress < duration) {
+          window.requestAnimationFrame(step);
         }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateNumber(setProjects, 500, 1500);
+            animateNumber(setExperience, 15, 1500);
+            animateNumber(setTeam, 50, 1500);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      }
     );
 
     if (currentRef) {
-        observer.observe(currentRef);
+      observer.observe(currentRef);
     }
 
     return () => {
-        if (currentRef) {        // Use captured ref, NOT sectionRef.current
-            observer.unobserve(currentRef);
-        }
+      if (currentRef) {        // Use captured ref, NOT sectionRef.current
+        observer.unobserve(currentRef);
+      }
     };
-}, []);
+  }, []);
 
   return (
     <section ref={sectionRef} id="about" className="py-24 bg-white">
@@ -88,14 +86,14 @@ useEffect(() => {
             </div>
 
             <h2 className="text-5xl font-bold text-slate-900 mb-8 leading-tight">
-              Digital Marketing Services Are No Longer 
+              Digital Marketing Services Are No Longer
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Optional in the AI Era</span>
             </h2>
 
             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-  Grovoz specializes in customer focused, results driven digital marketing. They understand that today&apos;s consumers make purchasing decisions based on their online discoveries. While acknowledging that all businesses need professional digital marketing, Grovoz sets itself apart by avoiding generic, one-size-fits-all solutions. Instead, their expert team leverages predictable consumer data patterns to develop strategies tailored to your specific products and services, ultimately aiming to generate the sales, traffic, and profit your business deserves.
-           </p>
-           
+              Grovoz specializes in customer focused, results driven digital marketing. They understand that today&apos;s consumers make purchasing decisions based on their online discoveries. While acknowledging that all businesses need professional digital marketing, Grovoz sets itself apart by avoiding generic, one-size-fits-all solutions. Instead, their expert team leverages predictable consumer data patterns to develop strategies tailored to your specific products and services, ultimately aiming to generate the sales, traffic, and profit your business deserves.
+            </p>
+
             <div className="space-y-6 mb-8">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -145,17 +143,17 @@ useEffect(() => {
                       <div className="text-slate-900 font-semibold">Team Performance</div>
                       <div className="text-green-500 font-bold">↑ 47%</div>
                     </div>
-                    
+
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">JS</div>
                         <div className="flex-1">
-                          <div className="text-sm font-medium text-slate-900">Bibin Basil</div>
+                          <div className="text-sm font-medium text-slate-900">Aswini Krishnan</div>
                           <div className="text-xs text-slate-600">SEO Specialist</div>
                         </div>
                         <div className="text-green-500 text-sm font-medium">+32%</div>
                       </div>
-                      
+
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">AD</div>
                         <div className="flex-1">
@@ -164,17 +162,17 @@ useEffect(() => {
                         </div>
                         <div className="text-green-500 text-sm font-medium">+28%</div>
                       </div>
-                      
+
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">MJ</div>
                         <div className="flex-1">
-                          <div className="text-sm font-medium text-slate-900">Aswini</div>
+                          <div className="text-sm font-medium text-slate-900">Varun Prabhakar</div>
                           <div className="text-xs text-slate-600">Content Manager</div>
                         </div>
                         <div className="text-green-500 text-sm font-medium">+41%</div>
                       </div>
                     </div>
-                    
+
                     {/* Growth Line Chart Section */}
                     <div className="mt-6">
                       <div className="text-slate-900 font-semibold mb-2">Monthly Growth</div>
@@ -194,11 +192,11 @@ useEffect(() => {
                 </div>
               </div>
 
-              {/* Floating cards */}
+              {/* Floating cards - FIXED: Added 'hidden md:block' to prevent mobile overflow */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200"
+                className="hidden md:block absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200"
               >
                 <div className="text-xs text-slate-600 mb-1">Monthly Growth</div>
                 <div className="text-lg font-bold text-green-500">+127%</div>
@@ -207,13 +205,13 @@ useEffect(() => {
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200"
+                className="hidden md:block absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200"
               >
                 <div className="text-xs text-slate-600 mb-1">Client Satisfaction</div>
                 <div className="text-lg font-bold text-blue-500">98.5%</div>
               </motion.div>
             </div>
-            
+
             {/* Company stats with gradient backgrounds */}
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 w-full">
               <div className="text-center p-4 rounded-xl bg-gradient-to-r from-blue-50 to-blue-100">
@@ -239,3 +237,5 @@ useEffect(() => {
     </section>
   );
 }
+
+// NOTE: This component is assumed to be exported from 'app/about.tsx'
