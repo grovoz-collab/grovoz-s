@@ -57,7 +57,7 @@ export default function FooterSection() {
             <div>
               <h4 className="font-semibold mb-4 text-white">Company</h4>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+                <li><a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
@@ -70,7 +70,7 @@ export default function FooterSection() {
   <h4 className="font-semibold mb-4 text-white">Our Location</h4>
             <div className="w-full h-40 md:h-64 rounded-xl overflow-hidden">
              <iframe
-  src="https://maps.app.goo.gl/9MfahiAzeMY7Wtam8" 
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4834.229620185722!2d76.3342845!3d10.0357681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d1e7ad2b9d9%3A0x40e561ed4c0be47c!2sGrovoz%20Marketing%20Company!5e1!3m2!1sen!2sae!4v1760346456666!5m2!1sen!2sae" 
   width="100%"
   height="100%"
   style={{ border: 0 }}
