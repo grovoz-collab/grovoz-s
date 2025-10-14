@@ -6,10 +6,10 @@ import Image from 'next/image';
 
 const testimonials = [
  {
-  "name": "Bibin Basil",
+  "name": "James Albert",
   "role": "Marketing Manager",
-  "company": "Best Solution ",
-  "avatar": "/Bibin_basil.webp",
+  "company": "BestTech",
+  "avatar": "/michael.webp",
   "content": "Grovoz has completely elevated our digital marketing strategy. Their team's expertise in SEO and content creation, especially Ashwini, led to a significant increase in our website traffic and conversions. They are professional, proactive, and truly invested in our success.",
   "rating": 5
 },

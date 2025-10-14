@@ -20,7 +20,7 @@ export default function FooterSection() {
               </p>
             </div>
             <p className="text-slate-400 leading-relaxed mb-4 max-w-sm">
-              The most advanced platform for digital business cards and professional networking.
+              The most advanced platform for digital Marketing and Brand Growth.
             </p>
 
             {/* Social Icons */}
