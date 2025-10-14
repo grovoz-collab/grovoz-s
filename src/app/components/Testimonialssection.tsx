@@ -9,7 +9,7 @@ const testimonials = [
   "name": "James Albert",
   "role": "Marketing Manager",
   "company": "BestTech",
-  "avatar": "/michael.webp",
+  "avatar": "/MICHAEL.webp",
   "content": "Grovoz has completely elevated our digital marketing strategy. Their team's expertise in SEO and content creation, especially Ashwini, led to a significant increase in our website traffic and conversions. They are professional, proactive, and truly invested in our success.",
   "rating": 5
 },
